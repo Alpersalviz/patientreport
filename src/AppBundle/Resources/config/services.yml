@@ -8,5 +8,19 @@ services:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
 
+      app.base_controller:
+          class: AppBundle\Controller\BaseController
+          abstract: true
+
       app.default_controller:
-            class: AppBundle\Controller\DefaultController
+          class: AppBundle\Controller\DefaultController
+          arguments: ["@app.hospital_repository"]
+
+      app.base_repository:
+          class: AppBundle\Data\Repository\BaseRepository
+          calls:
+              - [Initialize , ["@doctrine.dbal.default_connection"]]
+
+      app.hospital_repository:
+          class: AppBundle\Data\Repository\HospitalRepository
+          parent: app.base_repository
