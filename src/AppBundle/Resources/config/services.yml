@@ -14,13 +14,22 @@ services:
 
       app.default_controller:
           class: AppBundle\Controller\DefaultController
-          arguments: ["@app.hospital_repository"]
+          arguments: ["@app.patient_repository","@app.hospital_repository"]
 
       app.base_repository:
           class: AppBundle\Data\Repository\BaseRepository
           calls:
               - [Initialize , ["@doctrine.dbal.default_connection"]]
 
+      app.patient_repository:
+          class: AppBundle\Data\Repository\PatientRepository
+          parent: app.base_repository
+
+
       app.hospital_repository:
           class: AppBundle\Data\Repository\HospitalRepository
           parent: app.base_repository
+
+      app.hospital_controller:
+          class: AppBundle\Controller\HospitalController
+          arguments: ["@app.hospital_repository"]

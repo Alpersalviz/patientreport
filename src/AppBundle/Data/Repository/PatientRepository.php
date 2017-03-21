@@ -22,17 +22,14 @@ class PatientRepository extends BaseRepository
                      FROM patient';
 
             $result = $this->getConnection()->prepare($query);
-
             $result->execute();
+
+            if($result == false)
+                return false;
 
             $results = $result->fetchAll();
 
-
-            if($results == false)
-                return false;
-
             $patients = array();
-
             foreach ($results as $result)
             {
                 $patients[] = (new Patient())->MapFrom($result);

@@ -11,8 +11,6 @@ use Monolog\Logger;
 
 class BaseRepository
 {
-
-
     private $_connection;
 
     public function Initialize(Connection $connection)
