@@ -25,6 +25,9 @@ services:
           class: AppBundle\Data\Repository\PatientRepository
           parent: app.base_repository
 
+      app.patient_controller:
+          class: AppBundle\Controller\PatientController
+          arguments: ["@app.patient_repository"]
 
       app.hospital_repository:
           class: AppBundle\Data\Repository\HospitalRepository

@@ -30,12 +30,27 @@ class HospitalController extends BaseController
      */
     public function indexAction(Request $request)
     {
-        $hospital = $this->_hospitalRepo->GetAllHospital();
-
+        //($hospital = $this->_hospitalRepo->GetAllHospital();
         // replace this example code with whatever you need
-        return array(
-            'hospital' => $hospital
-        );
+        return array();
     }
 
+    /**
+     * @Route("/hospital/add", name="hospital_add")
+     * @Template("AppBundle:Hospital:add.html.twig")
+     */
+    public function hospitalAddAction(Request $request)
+    {
+
+        return array();
+    }
+    /**
+     * @Route("/hospital/edit", name="hospital_edit")
+     * @Template("AppBundle:Hospital:edit.html.twig")
+     */
+    public function hospitalEditAction(Request $request)
+    {
+
+        return array();
+    }
 }

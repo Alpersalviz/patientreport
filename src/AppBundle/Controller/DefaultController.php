@@ -30,7 +30,7 @@ class DefaultController extends BaseController
      */
     public function indexAction(Request $request)
     {
-        $patients = $this->_patientRepo->GetAllPatient();
+        //$patients = $this->_patientRepo->GetAllPatient();
  
         // replace this example code with whatever you need
         return array();
@@ -42,11 +42,55 @@ class DefaultController extends BaseController
      */
     public function indexHospAction(Request $request)
     {
-        $results = $this->_hospitalRepo->GetAllHospital();
+        //$results = $this->_hospitalRepo->GetAllHospital();
 
-        var_dump($results);exit();
+        //var_dump($results);exit();
         // replace this example code with whatever you need
         return array();
+    }
+    /**
+     *@Route("/login",name="login")
+     *@Template("AppBundle:Default:login.html.twig")
+     */
+    public function LoginAction()
+    {
+
+        return array();
+    }
+
+    /**
+     *@Route("/ajax/login",name="ajax_login")
+     */
+    public function AjaxLoginAction(Request $request)
+    {
+        $name = $request->request->get('username');
+        $password = $request->request->get('password');
+        $users = $this->_userRepository->LoginUser($name,$password);
+
+        if($users == false)
+            return new JsonResponse (array(
+                'success' => false
+            ));
+
+
+        $this->GetSession()->set('id',$users->UserId);
+        $this->GetSession()->set('name',$users->UserName);
+
+        return new JsonResponse (array(
+            'success' => true
+        ));
+
+    }
+
+
+    /**
+     * @Route("/logout",name="logout")
+     */
+    public function LogoutAction()
+    {
+        $this->GetSession()->clear();
+        return $this->redirect('/admin');
+
     }
 
 }

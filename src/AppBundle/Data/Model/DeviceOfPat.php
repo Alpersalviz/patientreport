@@ -21,6 +21,7 @@ class DeviceOfPat
     public $PatientStatus;
     public $DescrDevOfPat;
     public $StayDurationOfDev;
+    public $DescrDate;
 
     public function MapFrom (array $data)
     {
@@ -33,6 +34,7 @@ class DeviceOfPat
         $this->PatientStatus = $data ['patient_status'];
         $this->DescrDevOfPat = $data ['desc_dev_of_pat'];
         $this->StayDurationOfDev = $data ['stay_duration_of_dev'];
+        $this->DescrDate = $data ['descr_date'];
 
         return $this;
     }
