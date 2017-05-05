@@ -6,28 +6,28 @@
                 <div class="panel-heading">
                    <strong> ADD HOSPITAL </strong>
                 </div>
+                <div class="alert alert-success" style="display: none">
+                    <strong>Başarıyla Eklendi</strong>
+                </div>
+
+                <div class="alert alert-danger" style="display: none"><strong>Hata Oluştu</strong></div>
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-6">
-                            <form role="form">
+                            <form id="hospital-add" class="hospital-add" method="post">
                                 <div class="form-group">
                                     <label>Hospital Name :</label>
-                                    <input class="form-control">
+                                    <input  data-validation="required"  data-validation-error-msg="Can not Empty" type="text" name="hospitalName" id="hospitalName" tabindex="1" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label>City :</label>
-                                    <select class="form-control">
+                                    <select data-validation="required" name="city" id="city" class="form-control">
                                         <option>İzmir</option>
                                         <option>İstanbul</option>
                                         <option>Ankara</option>
                                         <option>Antalya</option>
                                         <option>Antep</option>
                                     </select>
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Address :</label>
-                                    <textarea class="form-control" rows="3"></textarea>
                                 </div>
 
                                 <button type="submit" class="btn btn-primary">Save</button>
@@ -42,4 +42,47 @@
         </div>
         <!-- /.col-lg-12 -->
     </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    <script>
+        var Forms={
+            Link:{
+                Self:$('#hospital-add'),
+                Bind:function () {
+                    Forms.Link.Self.on('submit',function (e) {
+                        e.preventDefault();
+                        $.post('{{ url('ajax_hospital_add') }}',$(this).serialize(),function (result) {
+                            if(result.success)
+                            {
+                                setTimeout(function () {
+                                    location.reload();
+                                },2000);
+                                $('.alert-success').slideDown();
+                            }else {
+                                $('.alert-danger').slideDown();
+                            }
+                        })
+                    })
+                }
+            },
+
+            Bind:function () {
+                Forms.Link.Bind();
+            }
+        }
+
+        $(document).ready(function () {
+            $.validate({
+                validateOnBlur : false,
+                errorMessagePosition : 'top',
+                scrollToTopOnError : false
+            });
+            Forms.Bind();
+
+        });
+
+
+    </script>
 {% endblock %}

@@ -3,9 +3,11 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Data\Repository\HospitalRepository;
+use AppBundle\Data\Repository\OperatorRepository;
 use AppBundle\Data\Repository\PatientRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template; 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 
@@ -17,11 +19,13 @@ class DefaultController extends BaseController
 
     private $_patientRepo;
     private $_hospitalRepo;
+    private $_userRepository;
 
-    function __construct(PatientRepository $patientRepository, HospitalRepository $hospitalRepository)
+    function __construct(PatientRepository $patientRepository, HospitalRepository $hospitalRepository,OperatorRepository $operatorRepository)
     {
         $this->_patientRepo = $patientRepository;
         $this->_hospitalRepo = $hospitalRepository;
+        $this->_userRepository = $operatorRepository;
 
     }
     /**
@@ -30,30 +34,21 @@ class DefaultController extends BaseController
      */
     public function indexAction(Request $request)
     {
+
         //$patients = $this->_patientRepo->GetAllPatient();
  
         // replace this example code with whatever you need
         return array();
     }
-
-    /**
-     * @Route("/gulcan", name="gulcanpage")
-     * @Template("AppBundle:Default:index.html.twig")
-     */
-    public function indexHospAction(Request $request)
-    {
-        //$results = $this->_hospitalRepo->GetAllHospital();
-
-        //var_dump($results);exit();
-        // replace this example code with whatever you need
-        return array();
-    }
+ 
     /**
      *@Route("/login",name="login")
      *@Template("AppBundle:Default:login.html.twig")
      */
     public function LoginAction()
     {
+        if ($this->GetSession()->get("id") != null)
+            return $this->redirect("/");
 
         return array();
     }
@@ -65,7 +60,7 @@ class DefaultController extends BaseController
     {
         $name = $request->request->get('username');
         $password = $request->request->get('password');
-        $users = $this->_userRepository->LoginUser($name,$password);
+        $users = $this->_userRepository->LoginUser($name,$password); 
 
         if($users == false)
             return new JsonResponse (array(
@@ -73,8 +68,8 @@ class DefaultController extends BaseController
             ));
 
 
-        $this->GetSession()->set('id',$users->UserId);
-        $this->GetSession()->set('name',$users->UserName);
+        $this->GetSession()->set('id',$users->ID);
+        $this->GetSession()->set('name',$users->Username);
 
         return new JsonResponse (array(
             'success' => true
@@ -89,7 +84,7 @@ class DefaultController extends BaseController
     public function LogoutAction()
     {
         $this->GetSession()->clear();
-        return $this->redirect('/admin');
+        return $this->redirect('/');
 
     }
 

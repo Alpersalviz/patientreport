@@ -7,9 +7,9 @@ namespace AppBundle\Data\Model;
  * Date: 27.02.2017
  * Time: 21:46
  */
-class Operator
+class User
 {
-    public $OperatorID;
+    public $ID;
     public $Username;
     public $FistnameOfOp;
     public $LastnameOfOp;
@@ -17,9 +17,9 @@ class Operator
 
     public function MapFrom(array $data)
     {
-        $this->OperatorID = $data['operatorID'];
+        $this->ID = $data['ID'];
         $this->Username = $data['username'];
-        $this->FirstnameOfOp = $data['firstname_op'];
+        $this->FistnameOfOp = $data['fistname_op'];
         $this->LastnameOfOp = $data ['lastname_op'];
         $this->PasswordOfOp = $data ['password_op'];
 

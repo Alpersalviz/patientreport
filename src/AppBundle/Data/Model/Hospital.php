@@ -12,17 +12,15 @@ namespace AppBundle\Data\Model;
 class Hospital
 {
 
-    public $HospitalID;
+    public $ID;
     public $NameOfHosp;
-    public $CityOfHosp;
-    public $AdressOfHosp;
+    public $CityOfHosp; 
 
     public function  MapFrom (array $data)
     {
-        $this->HospitalID = $data['hospitalID'];
+        $this->ID = $data['ID'];
         $this->NameOfHosp = $data['name_hosp'];
         $this->CityOfHosp = $data['city_hosp'];
-        $this->AdressOfHosp = $data['adress_hosp'];
 
         return $this;
     }

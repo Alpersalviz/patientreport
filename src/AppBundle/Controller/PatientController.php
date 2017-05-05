@@ -7,9 +7,13 @@
  */
 
 namespace AppBundle\Controller;
+
+use AppBundle\Data\Model\Patient;
+use AppBundle\Data\Model\Implant;
 use AppBundle\Data\Repository\PatientRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 
@@ -45,7 +49,22 @@ class PatientController extends BaseController
 
         return array();
     }
+    /**
+     * @Route("ajax/patient/add", name="ajax_patient_add")
+     */
+    public function AjaxPatientAddAction(Request $request)
+    {
+        $device = $request->request->get('device');
+        $patient = $request->request->get('patient');
+        $deviceOfPat = (new Implant())->MapFrom($device);
 
+        $patientObj = (new Patient())->MapFrom($patient);
+        $add = $this->_patientRepo->AddImplant($deviceOfPat,$patientObj);
+ 
+        return new JsonResponse(array(
+            'success' => $add
+        ));
+    }
     /**
      * @Route("/patient/edit", name="patient_edit")
      * @Template("AppBundle:Patient:edit.html.twig")

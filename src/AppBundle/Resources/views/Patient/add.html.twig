@@ -6,38 +6,45 @@
                 <div class="panel-heading">
                    <strong>ADD PATIENT </strong>
                 </div>
+                <div class="alert alert-success" style="display: none">
+                    <strong>Başarıyla Eklendi</strong>
+                </div>
+
+                <div class="alert alert-danger" style="display: none"><strong>Hata Oluştu</strong></div>
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-12">
                             <div role="form">
+                                <form id="device-add" class="device-add" method="post">
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                 <div class="form-group">
                                     <label>Patient ID :</label>
-                                    <input class="form-control">
+                                    <input  data-validation="required"  data-validation-error-msg="Can not Empty" type="text" name="patientId" id="patientId" tabindex="1" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label>TR Identity No :</label>
-                                    <input class="form-control">
+
+                                    <input  data-validation="required"  data-validation-error-msg="Can not Empty" type="text" name="identityNo" id="identityNo" tabindex="1" class="form-control">
                                 </div>
                                     <div class="form-group">
                                         <label for="disabledSelect">Adress :</label>
-                                        <textarea class="form-control" id="textarea-size" placeholder="Add a address" rows="3"></textarea>
+                                        <textarea class="form-control" id="textarea-size"  name="adress"  placeholder="Add a address" rows="3"></textarea>
                                     </div>
                             </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                     <div class="form-group">
                                         <label>First Name :</label>
-                                        <input class="form-control">
+                                        <input  data-validation="required"  data-validation-error-msg="Can not Empty" type="text" name="firstName" id="firstName" tabindex="1" class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label>Last Name :</label>
-                                        <input class="form-control">
+                                        <input  data-validation="required"  data-validation-error-msg="Can not Empty" type="text" name="lastName" id="lastName" tabindex="1" class="form-control">
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group" id="phone">
                                         <label>Phone :</label>
 
-                                        <input class="form-control" id="phone">
-                                        <button id="btn-phone" type="submit" class="btn btn-primary">+</button>
+                                        <input data-validation="required"  data-validation-error-msg="Can not Empty" type="text" name="phone" class="form-control phones">
+                                        <button id="btn-phone" type="button" class="btn btn-primary">+</button>
 
                                     </div>
                                 </div>
@@ -48,7 +55,7 @@
                                     <div class="col-lg-6">
                                 <div class="form-group">
                                     <label>Implant Center :</label>
-                                    <select class="form-control">
+                                    <select  name="implantCenter" id="implantCenter"  class="form-control">
                                         <option>1</option>
                                         <option>2</option>
                                         <option>3</option>
@@ -60,7 +67,7 @@
                                     <label>Operation Date :</label>
 
                                     <div class='input-group date' id='datetimepicker1'>
-                                        <input type='text' class="form-control" />
+                                        <input type='date' name="operationDate" id="operationDate" class="form-control" />
                                         <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
@@ -69,29 +76,35 @@
                                 </div>
                                 <div class="form-group">
                                     <label>HVAD Pump ID :</label>
-                                    <input class="form-control">
+                                    <input  data-validation="required"  data-validation-error-msg="Can not Empty" type="text" name="HVADPumpID" id="HVADPumpID" tabindex="1" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label>Quantitiy of Device :</label>
-                                    <input class="form-control">
+                                    <input data-validation="required"  data-validation-error-msg="Can not Empty" type="text" name="quantitiyofDevice" id="quantitiyofDevice" tabindex="1" class="form-control">
                                 </div>
                                     </div>
                                     <div class="col-lg-6">
                                 <div class="form-group">
                                     <label>Status of Patient :</label>
-                                    <input class="form-control">
+                                    <input data-validation="required"  data-validation-error-msg="Can not Empty" type="text" name="statusofPatient" id="statusofPatient" tabindex="1" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label>Status Date :</label>
-                                    <input class="form-control">
+
+                                    <div class='input-group date' id='datetimepicker2'>
+                                        <input type='date' name="statusDate" id="statusDate" class="form-control" />
+                                        <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label>How long stayed on device (days) :</label>
-                                    <input class="form-control">
+                                    <input data-validation="required"  value="0" data-validation-error-msg="Can not Empty" type="text" name="stayedOnDevice" id="stayedOnDevice" tabindex="1" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="disabledSelect">Note :</label>
-                                    <textarea class="form-control" id="textarea-size" placeholder="Take a note" rows="3"></textarea>
+                                    <textarea class="form-control" id="textarea-size" name="note" placeholder="Take a note" rows="3"></textarea>
                                 </div>
 
                                 </div>
@@ -110,11 +123,145 @@
     <!-- /.col-lg-12 -->
     </div>
 
-    <script>
-         type="text/javascript">
-            $(function () {
-                $('#datetimepicker1').datetimepicker();
-            });
+
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+                $(function () {
+
+                });
+
+                var mask = "(999) 999-9999";
+
+                var phoneNumbers=[];
+                var Patient={
+                    Add:{
+                        Self: $('#device-add'),
+                        Fields:{
+                            PatientID:      $('#device-add input[name ="patientId"]'),
+                            OperatorID: {{ app.session.get('id') }},
+                            TCKimlikNo:     $('#device-add input[name ="identityNo"]'),
+                            FirstnameOfPat: $('#device-add input[name ="firstName"]'),
+                            LastnameOfPat:  $('#device-add input[name ="lastName"]'),
+                            AdressOfPat:    $('#device-add textarea[name ="adress"]'),
+                            DeviceOfPatID:      null,
+                            PatientID:          $('#device-add input[name ="patientId"]'),
+                            HospitalID:         $('#device-add select[name ="implantCenter"]'),
+                            ImplantDate:        $('#device-add input[name ="operationDate"]'),
+                            StatusDate:         $('#device-add input[name ="statusDate"]'),
+                            PatientStatus:      $('#device-add input[name ="statusofPatient"]'),
+                            StayDurationOfDev:  $('#device-add input[name ="stayedOnDevice"]'),
+                            Desc:               $('#device-add textarea[name ="note"]'),
+                            HVADPumpID:         $('#device-add input[name ="HVADPumpID"]'),
+                            Qty:                $('#device-add input[name ="quantitiyofDevice"]')
+                        },
+                        Values          : function(){
+                            return {
+                                patient:{
+                                    ID:      null,
+                                    patientID:      Patient.Add.Fields.PatientID.val(),
+                                    operatorID: {{ app.session.get('id') }},
+                                    tckimlikNo:     Patient.Add.Fields.TCKimlikNo.val(),
+                                    firstname_pat:  Patient.Add.Fields.FirstnameOfPat.val(),
+                                    lastname_pat:   Patient.Add.Fields.LastnameOfPat.val(),
+                                    adress_pat:     Patient.Add.Fields.AdressOfPat.val(),
+                                    phoneNumbers:   phoneNumbers
+                                },
+                                device:{
+                                    ID:      null,
+                                    patientID:          Patient.Add.Fields.PatientID.val(),
+                                    HVADPumpID:          Patient.Add.Fields.HVADPumpID.val(),
+                                    hospitalID:         Patient.Add.Fields.HospitalID.val(),
+                                    implant_date:        Patient.Add.Fields.ImplantDate.val(),
+                                    status_date:         Patient.Add.Fields.StatusDate.val(),
+                                    patient_status:      Patient.Add.Fields.PatientStatus.val(),
+                                    desc_dev_of_pat:     Patient.Add.Fields.Desc.val(),
+                                    stay_duration_of_dev:  Patient.Add.Fields.StayDurationOfDev.val(),
+                                    qty:                Patient.Add.Fields.Qty.val()
+                                }
+                            };
+                        },
+                        Bind:function () {
+                            Patient.Add.Self.on('submit',function (e) {
+                                e.preventDefault();
+                                phoneNumbers = [];
+                                $('.phones').each(function () {
+
+                                    $(this).unmask(mask);
+                                    if( $(this).val() != null){
+                                    phoneNumbers.push({
+                                        'phonenoID': null,
+                                        'patientID' :  Patient.Add.Fields.PatientID.val(),
+                                        'phone_no' : $(this).val()
+                                    });
+                                    }
+                                });
+                                    $.post('{{ url('ajax_patient_add') }}',Patient.Add.Values(),function (result) {
+                                        console.log(result.success);
+                                        if(result.success)
+                                        {
+                                            setTimeout(function () {
+                                                location.reload();
+                                            },2000);
+                                            $('.alert-success').slideDown();
+                                        }else {
+                                            $('.alert-danger').slideDown();
+                                        }
+                                    })
+
+
+                            })
+                        }
+                    },
+                    Bind:function () {
+                        Patient.Add.Bind();
+                    }
+                };
+
+                $(document).ready(function () { 
+                    $('#btn-phone').click(function () {
+                       $('#phone').append(' <input data-validation="required" style="margin-bottom: 18px"  data-validation-error-msg="Can not Empty" type="text" name="phone" class="form-control phones">');
+                        $('.phones').each(function () {
+                            $(this).mask(mask);
+                        });
+                    });
+
+                    $('.phones').each(function () {
+                        $(this).mask(mask);
+                    });
+
+                    var today = new Date();
+                    var dd = today.getDate();
+                    var mm = today.getMonth()+1; //January is 0!
+
+                    var yyyy = today.getFullYear();
+                    if(dd<10){
+                        dd='0'+dd;
+                    }
+                    if(mm<10){
+                        mm='0'+mm;
+                    }
+                    var today = yyyy+'-'+mm+'-'+dd;
+
+                    Patient.Add.Fields.ImplantDate.val(today);
+                    Patient.Add.Fields.StatusDate.val(today);
+
+                    $("#statusDate").change(function(){
+                        var diff = daydiff(parseDate($('#statusDate').val()), parseDate($('#operationDate').val()));
+                        $("#stayedOnDevice").val(diff);
+                    })
+                    function parseDate(str) {
+                        var mdy = str.split('-');
+                        return new Date(mdy[0], mdy[1]-1, mdy[2]);
+                    }
+
+                    function daydiff(first, second) {
+                        return Math.round((first-second)/(1000*60*60*24));
+                    }
+
+                    Patient.Bind();
+                })
 
     </script>
 {% endblock %}

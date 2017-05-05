@@ -7,14 +7,33 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+      kernel.listener.controller_listener:
+          class:  AppBundle\EventListener\ControllerListener
+          arguments:
+              userRepository:  "@app.user_repository"
+          tags:
+              - { name: kernel.event_listener, event: kernel.controller, method: onHandleController }
+
+      kernel.listener.exception_listener:
+          class: AppBundle\EventListener\ExceptionListener
+          arguments: ["@twig", "@logger"]
+          tags:
+              - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+
+      app.user_repository:
+          class: AppBundle\Data\Repository\OperatorRepository
+          parent: app.base_repository
 
       app.base_controller:
           class: AppBundle\Controller\BaseController
           abstract: true
+          calls:
+              - [ Initialize, ["@session"] ]
 
       app.default_controller:
           class: AppBundle\Controller\DefaultController
-          arguments: ["@app.patient_repository","@app.hospital_repository"]
+          arguments: ["@app.patient_repository","@app.hospital_repository","@app.user_repository"]
+          parent: "app.base_controller"
 
       app.base_repository:
           class: AppBundle\Data\Repository\BaseRepository
@@ -28,6 +47,7 @@ services:
       app.patient_controller:
           class: AppBundle\Controller\PatientController
           arguments: ["@app.patient_repository"]
+          parent: "app.base_controller"
 
       app.hospital_repository:
           class: AppBundle\Data\Repository\HospitalRepository
@@ -36,3 +56,4 @@ services:
       app.hospital_controller:
           class: AppBundle\Controller\HospitalController
           arguments: ["@app.hospital_repository"]
+          parent: "app.base_controller"

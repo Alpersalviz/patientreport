@@ -1,41 +1,36 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gulcanertop
- * Date: 27.02.2017
- * Time: 23:21
- */
-
 namespace AppBundle\Data\Model;
 
 
-class DeviceOfPat
+class Implant
 {
 
-    public $DeviceOfPatID;
+    public $ID;
     public $PatientID;
-    public $DeviceID;
+    public $HVADPumpID;
     public $HospitalID;
     public $ImplantDate;
     public $StatusDate;
     public $PatientStatus;
     public $DescrDevOfPat;
     public $StayDurationOfDev;
-    public $DescrDate;
+    public $Qty;
 
     public function MapFrom (array $data)
     {
-        $this->DeviceOfPatID = $data['device_of_patientID'];
+        $this->ID = $data['ID'];
         $this->PatientID = $data ['patientID'];
-        $this->DeviceID = $data ['deviceID'];
+        $this->HVADPumpID = $data['HVADPumpID'];
         $this->HospitalID = $data ['hospitalID'];
         $this->ImplantDate = $data ['implant_date'];
         $this->StatusDate = $data ['status_date'];
         $this->PatientStatus = $data ['patient_status'];
         $this->DescrDevOfPat = $data ['desc_dev_of_pat'];
         $this->StayDurationOfDev = $data ['stay_duration_of_dev'];
-        $this->DescrDate = $data ['descr_date'];
+        $this->Qty = $data ['qty'];
 
         return $this;
+
     }
+
 }
