@@ -10,6 +10,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Data\Model\Patient;
 use AppBundle\Data\Model\Implant;
+use AppBundle\Data\Repository\HospitalRepository;
 use AppBundle\Data\Repository\PatientRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -23,10 +24,12 @@ use Symfony\Component\HttpFoundation\Request;
 class PatientController extends BaseController
 {
     private $_patientRepo;
+    private $_hospitalRepo;
 
-    function __construct(PatientRepository $patientRepository)
+    function __construct(PatientRepository $patientRepository, HospitalRepository $hospitalRepository)
     {
         $this->_patientRepo = $patientRepository;
+        $this->_hospitalRepo = $hospitalRepository;
 
     }
     /**
@@ -46,8 +49,11 @@ class PatientController extends BaseController
      */
     public function patientAddAction(Request $request)
     {
+        $implantCenter = $this->_hospitalRepo->GetAllHospital();
 
-        return array();
+        return array(
+            'implantCenter' => $implantCenter
+        );
     }
     /**
      * @Route("ajax/patient/add", name="ajax_patient_add")

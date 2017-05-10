@@ -15,6 +15,7 @@ class Implant
     public $DescrDevOfPat;
     public $StayDurationOfDev;
     public $Qty;
+    public $OnDevice;
 
     public function MapFrom (array $data)
     {
@@ -28,6 +29,7 @@ class Implant
         $this->DescrDevOfPat = $data ['desc_dev_of_pat'];
         $this->StayDurationOfDev = $data ['stay_duration_of_dev'];
         $this->Qty = $data ['qty'];
+        $this->OnDevice = $data ['on_device'];
 
         return $this;
 

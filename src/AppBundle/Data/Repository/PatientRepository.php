@@ -128,15 +128,14 @@ class PatientRepository extends BaseRepository
             $this->getConnection()->beginTransaction();
 
             $patientQuery = "INSERT INTO patient
-                              (operatorID, tckimlikNo, firstname_pat, lastname_pat, adress_pat,patientID)VALUES 
-                              (:operatorID,:tckimlikNo,:firstname_pat,:lastname_pat,:adress_pat,:patientID)";
+                              (operatorID, tckimlikNo, firstname_pat, adress_pat,patientID)VALUES 
+                              (:operatorID,:tckimlikNo,:firstname_pat,:adress_pat,:patientID)";
             $patientResult = $this->getConnection()->prepare($patientQuery);
             $patientResult->execute(array(
                 ':patientID' =>$patient->PatientID,
                 ':operatorID' => 2,
                 ':tckimlikNo' => $patient->TCKimlikNo,
                 ':firstname_pat' => $patient->FirstnameOfPat,
-                ':lastname_pat' => $patient->LastnameOfPat,
                 ':adress_pat' => $patient->AdressOfPat
             ));
 
@@ -165,8 +164,8 @@ class PatientRepository extends BaseRepository
 
 
             $query = "INSERT INTO implant
-                      (patientID, HVADPumpID, hospitalID, implant_date, status_date, patient_status, descr_dev_of_pat, stay_duration_of_dev,qty) VALUES 
-                      (:patientID,:HVADPumpID,:hospitalID,:implant_date,:status_date,:patient_status,:descr_dev_of_pat,:stay_duration_of_dev,:qty)";
+                      (patientID, HVADPumpID, hospitalID, implant_date, status_date, patient_status, descr_dev_of_pat, stay_duration_of_dev,qty,on_device) VALUES 
+                      (:patientID,:HVADPumpID,:hospitalID,:implant_date,:status_date,:patient_status,:descr_dev_of_pat,:stay_duration_of_dev,:qty,:on_device)";
 
             $result = $this->getConnection()->prepare($query);
             $result->execute(array(
@@ -178,7 +177,8 @@ class PatientRepository extends BaseRepository
                 ':patient_status' => $device->PatientStatus,
                 ':descr_dev_of_pat' => $device->DescrDevOfPat,
                 ':stay_duration_of_dev' => $device->StayDurationOfDev,
-                ':qty' => $device->Qty
+                ':qty' => $device->Qty,
+                ':on_device' => (int)$device->OnDevice
             ));
 
 

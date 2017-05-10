@@ -9,6 +9,7 @@
 namespace AppBundle\Data\Repository;
 
 
+use AppBundle\Data\Model\City;
 use AppBundle\Data\Model\Hospital;
 use AppBundle\Domain\Model\PagedList;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -32,6 +33,24 @@ class HospitalRepository extends BaseRepository
             $hospitals[] = (new Hospital())->MapFrom($result);
         }
         return $hospitals;
+    }
+    public function GetAllCity()
+    {
+        $query = "SELECT * FROM city";
+
+        $result = $this->getConnection()->prepare($query);
+        $result->execute();
+
+        if ($result == false)
+            return false;
+
+        $results = $result->fetchAll();
+
+        $cities = array();
+        foreach ($results as $result) {
+            $cities[] = (new City())->MapFrom($result);
+        }
+        return $cities;
     }
 
     public function SaveHospital(Hospital $hospital)
@@ -99,8 +118,8 @@ class HospitalRepository extends BaseRepository
             if($countResult === null || (int)$countResult['row_count'] == 0)
                 return new PagedList(null,0,$limit,$searchKey);
 
-            $query = "SELECT *
-                    FROM hospital h";
+            $query = "SELECT h.*,c.city
+                    FROM hospital h INNER JOIN city c ON h.city_hosp = c.ID";
             if($searchKey !== null){
                 $query .=' WHERE h.name_hosp
                         LIKE "%'.$searchKey.'%" OR h.city_hosp LIKE "%'.$searchKey.'%"';

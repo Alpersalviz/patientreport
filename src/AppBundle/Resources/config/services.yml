@@ -46,7 +46,7 @@ services:
 
       app.patient_controller:
           class: AppBundle\Controller\PatientController
-          arguments: ["@app.patient_repository"]
+          arguments: ["@app.patient_repository","@app.hospital_repository"]
           parent: "app.base_controller"
 
       app.hospital_repository:

@@ -16,7 +16,6 @@ class Patient
     public $OperatorID;
     public $TCKimlikNo;
     public $FirstnameOfPat;
-    public $LastnameOfPat;
     public $AdressOfPat;
 
     public $PhoneNumbers;
@@ -30,7 +29,6 @@ class Patient
         $this->OperatorID = $data['operatorID'];
         $this->TCKimlikNo = $data['tckimlikNo'];
         $this->FirstnameOfPat = $data['firstname_pat'];
-        $this->LastnameOfPat = $data['lastname_pat'];
         $this->AdressOfPat = $data['adress_pat'];
 
 

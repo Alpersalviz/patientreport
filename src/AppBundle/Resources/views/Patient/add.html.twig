@@ -33,13 +33,10 @@
                             </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                     <div class="form-group">
-                                        <label>First Name :</label>
+                                        <label>Full Name :</label>
                                         <input  data-validation="required"  data-validation-error-msg="Can not Empty" type="text" name="firstName" id="firstName" tabindex="1" class="form-control">
                                     </div>
-                                    <div class="form-group">
-                                        <label>Last Name :</label>
-                                        <input  data-validation="required"  data-validation-error-msg="Can not Empty" type="text" name="lastName" id="lastName" tabindex="1" class="form-control">
-                                    </div>
+
                                     <div class="form-group" id="phone">
                                         <label>Phone :</label>
 
@@ -56,11 +53,9 @@
                                 <div class="form-group">
                                     <label>Implant Center :</label>
                                     <select  name="implantCenter" id="implantCenter"  class="form-control">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
+                                        {% for hospital  in implantCenter %}
+                                            <option value="{{ hospital.ID }}">{{ hospital.NameOfHosp }}</option>
+                                        {% endfor %}
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -107,6 +102,14 @@
                                     <textarea class="form-control" id="textarea-size" name="note" placeholder="Take a note" rows="3"></textarea>
                                 </div>
 
+
+
+                                        <div class="form-group">
+                                            <div class="checkbox">
+                                                <label><input name="on_device" type="checkbox" value="1" checked>On Device</label>
+                                            </div>
+                                        </div>
+
                                 </div>
 
                                 </div>
@@ -128,11 +131,8 @@
 
 {% block javascripts %}
     <script type="text/javascript">
-                $(function () {
-
-                });
-
                 var mask = "(999) 999-9999";
+                var ischecked = 1;
 
                 var phoneNumbers=[];
                 var Patient={
@@ -154,7 +154,8 @@
                             StayDurationOfDev:  $('#device-add input[name ="stayedOnDevice"]'),
                             Desc:               $('#device-add textarea[name ="note"]'),
                             HVADPumpID:         $('#device-add input[name ="HVADPumpID"]'),
-                            Qty:                $('#device-add input[name ="quantitiyofDevice"]')
+                            Qty:                $('#device-add input[name ="quantitiyofDevice"]'),
+                            IsOnDevice:         $('#device-add input[name ="on_device"]')
                         },
                         Values          : function(){
                             return {
@@ -178,7 +179,8 @@
                                     patient_status:      Patient.Add.Fields.PatientStatus.val(),
                                     desc_dev_of_pat:     Patient.Add.Fields.Desc.val(),
                                     stay_duration_of_dev:  Patient.Add.Fields.StayDurationOfDev.val(),
-                                    qty:                Patient.Add.Fields.Qty.val()
+                                    qty:                Patient.Add.Fields.Qty.val(),
+                                    on_device:                ischecked
                                 }
                             };
                         },
@@ -219,7 +221,14 @@
                     }
                 };
 
-                $(document).ready(function () { 
+                $(document).ready(function () {
+                    $('#device-add input[name ="on_device"]').change(function() {
+                        if(this.checked) {
+                          ischecked = 1;
+                        }else {
+                            ischecked = 0;
+                        }
+                    });
                     $('#btn-phone').click(function () {
                        $('#phone').append(' <input data-validation="required" style="margin-bottom: 18px"  data-validation-error-msg="Can not Empty" type="text" name="phone" class="form-control phones">');
                         $('.phones').each(function () {

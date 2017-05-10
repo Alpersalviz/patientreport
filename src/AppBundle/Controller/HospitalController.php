@@ -32,7 +32,7 @@ class HospitalController extends BaseController
      */
     public function indexAction(Request $request)
     {
-        $limit = intval($request->get('limit',2));
+        $limit = intval($request->get('limit',5));
         $page = intval($request->get('page',0));
 
         $searchKey = $request->get('searchKey',null);

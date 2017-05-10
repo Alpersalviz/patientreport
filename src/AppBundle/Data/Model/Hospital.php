@@ -14,13 +14,19 @@ class Hospital
 
     public $ID;
     public $NameOfHosp;
-    public $CityOfHosp; 
+    public $CityOfHosp;
+    public $City;
 
     public function  MapFrom (array $data)
     {
         $this->ID = $data['ID'];
         $this->NameOfHosp = $data['name_hosp'];
         $this->CityOfHosp = $data['city_hosp'];
+
+        if(array_key_exists('city',$data))
+        {
+            $this->City = $data["city"];
+        }
 
         return $this;
     }

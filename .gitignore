@@ -1,6 +1,5 @@
 /app/config/parameters.yml
 /build/
-/.idea/
 /phpunit.xml
 /var/*
 !/var/cache
@@ -13,5 +12,15 @@
 /var/sessions/*
 !var/sessions/.gitkeep
 !var/SymfonyRequirements.php
-/vendor/
-/web/bundles/
+/.idea/
+/web/uploads/*
+!web/uploads
+!web/uploads/.gitkeep
+/web/uploads/slide/*
+!web/uploads/slide
+!web/uploads/slide/.gitkeep
+/web/log/chat/*
+!web/log/chat/.gitkeep
+!web/log/chat
+*.DS_Store
+/vendor/*
