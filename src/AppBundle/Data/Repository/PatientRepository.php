@@ -10,6 +10,7 @@ namespace AppBundle\Data\Repository;
 
 use AppBundle\Data\Model\Patient;
 use AppBundle\Data\Model\Implant;
+use AppBundle\Domain\Model\PagedList;
 use Symfony\Component\Config\Definition\Exception\Exception;
 
 
@@ -105,38 +106,27 @@ class PatientRepository extends BaseRepository
     }
 
 
-    public function GetImplant()
-    {
-        $query = "SELECT 
-                  dop.*
-                  ,p.operatorID
-                  ,p.tckimlikNo
-                  ,p.firstname_pat
-                  ,p.lastname_pat
-                  ,p.adress_pat
-                  ,d.HVADPumpID 
-                  FROM device_of_patient dop 
-                  INNER JOIN patient p ON dop.patientID = p.patientID 
-                  INNER JOIN device d ON d.deviceID = dop.deviceID";
-
-        return false;
-    }
-
     public function AddImplant(Implant $device, Patient $patient)
     { 
         try {
             $this->getConnection()->beginTransaction();
 
             $patientQuery = "INSERT INTO patient
-                              (operatorID, tckimlikNo, firstname_pat, adress_pat,patientID)VALUES 
-                              (:operatorID,:tckimlikNo,:firstname_pat,:adress_pat,:patientID)";
+                              (operatorID, tckimlikNo, firstname_pat, adress_pat,patientID,patientAge, patientWeight , patientGender, patientHistory , patientBsa)VALUES 
+                              (:operatorID,:tckimlikNo,:firstname_pat,:adress_pat,:patientID,:patientAge, :patientWeight , :patientGender, :patientHistory , :patientBsa)";
             $patientResult = $this->getConnection()->prepare($patientQuery);
             $patientResult->execute(array(
                 ':patientID' =>$patient->PatientID,
                 ':operatorID' => 2,
                 ':tckimlikNo' => $patient->TCKimlikNo,
                 ':firstname_pat' => $patient->FirstnameOfPat,
-                ':adress_pat' => $patient->AdressOfPat
+                ':adress_pat' => $patient->AdressOfPat,
+                ':patientAge' => $patient->PatientAge,
+                ':patientWeight' => $patient->PatientWeight,
+                ':patientGender' => $patient->PatientGender,
+                ':patientHistory' => $patient->PatientHistory,
+                ':patientBsa' => $patient->PatientBsa
+
             ));
 
             if ($patientResult == false)
@@ -162,25 +152,86 @@ class PatientRepository extends BaseRepository
             if ($phoneResult === false)
                 return false;
 
-
             $query = "INSERT INTO implant
-                      (patientID, HVADPumpID, hospitalID, implant_date, status_date, patient_status, descr_dev_of_pat, stay_duration_of_dev,qty,on_device) VALUES 
-                      (:patientID,:HVADPumpID,:hospitalID,:implant_date,:status_date,:patient_status,:descr_dev_of_pat,:stay_duration_of_dev,:qty,:on_device)";
+                      (patientID, HVADPumpID, hospitalID, implant_date, status_date, patient_status, descr_dev_of_pat, stay_duration_of_dev,qty,on_device,ex,tx,surgicalImplant,implantType, surgeon, intermacsLevel, etiology, lavareCycle, cpbTime, pumpSpeed, pumpWatts, pumpFlow, pumpFlowSettling, referringClinician ,proctorName,outflowGraft, sterileSurgicalTools , drivelineExtensionCable , shoulderBag , showerBag,  batteryCharger ,batteryChargerACAdapter , dCAdaptor, mainController, backUpController ,main, backUp, batterySerial1, batterySerial2 ,batterySerial3 ,batterySerial4 ,batterySerial5 , batterySerial6 ,batterySerial7 ,batterySerial8 ,monitor ,monitorACAdapter ,outflowGraftRef, sterileSurgicalToolsRef , drivelineExtensionCableRef , shoulderBagRef , showerBagRef ,  batteryChargerRef ,batteryChargerACAdapterRef , dCAdaptorRef , mainControllerRef , backUpControllerRef , mainRef, backUpRef , batterySerial1Ref , batterySerial2Ref ,batterySerial3Ref ,batterySerial4Ref ,batterySerial5Ref , batterySerial6Ref ,batterySerial7Ref ,batterySerial8Ref ,monitorRef ,monitorACAdapterRef) VALUES 
+                      (:patientID,:HVADPumpID,:hospitalID,:implant_date,:status_date,:patient_status,:descr_dev_of_pat,:stay_duration_of_dev,:qty,:on_device,:ex,:tx,:surgicalImplant, :implantType, :surgeon, :intermacsLevel, :etiology, :lavareCycle, :cpbTime, :pumpSpeed, :pumpWatts, :pumpFlow, :pumpFlowSettling, :referringClinician, :proctorName,:outflowGraft, :sterileSurgicalTools , :drivelineExtensionCable , :shoulderBag , :showerBag,  :batteryCharger ,:batteryChargerACAdapter , :dCAdaptor, :mainController, :backUpController , :main, :backUp, :batterySerial1, :batterySerial2 , :batterySerial3 , :batterySerial4 , :batterySerial5 , :batterySerial6 ,:batterySerial7 ,:batterySerial8 ,:monitor ,:monitorACAdapter , :outflowGraftRef, :sterileSurgicalToolsRef , :drivelineExtensionCableRef , :shoulderBagRef , :showerBagRef ,  :batteryChargerRef , :batteryChargerACAdapterRef , :dCAdaptorRef , :mainControllerRef , :backUpControllerRef , :mainRef, :backUpRef , :batterySerial1Ref , :batterySerial2Ref , :batterySerial3Ref , :batterySerial4Ref , :batterySerial5Ref , :batterySerial6Ref , :batterySerial7Ref , :batterySerial8Ref , :monitorRef , :monitorACAdapterRef)";
 
             $result = $this->getConnection()->prepare($query);
             $result->execute(array(
-                ':patientID' => $device->PatientID,
-                ':HVADPumpID' => $device->HVADPumpID,
-                ':hospitalID' => $device->HospitalID,
-                ':implant_date' => $device->ImplantDate,
-                ':status_date' => $device->StatusDate,
-                ':patient_status' => $device->PatientStatus,
-                ':descr_dev_of_pat' => $device->DescrDevOfPat,
+                ':patientID'            => $device->PatientID,
+                ':HVADPumpID'           => $device->HVADPumpID,
+                ':hospitalID'           => $device->HospitalID,
+                ':implant_date'         => $device->ImplantDate,
+                ':status_date'          => $device->StatusDate,
+                ':patient_status'       => $device->PatientStatus,
+                ':descr_dev_of_pat'     => $device->DescrDevOfPat,
                 ':stay_duration_of_dev' => $device->StayDurationOfDev,
-                ':qty' => $device->Qty,
-                ':on_device' => (int)$device->OnDevice
-            ));
+                ':qty'                  => $device->Qty,
+                ':on_device'            => (int)$device->OnDevice,
+                ':ex'                   => (int)$device->Ex,
+                ':tx'                   => (int)$device->Tx,
+                ':surgicalImplant'      => $device->SurgicalImplant,
+                ':implantType'          => $device->ImplantType,
+                ':surgeon'              => $device->Surgeon,
+                ':intermacsLevel'       => $device->IntermacsLevel,
+                ':etiology'             => $device->Etiology,
+                ':lavareCycle'          => $device->LavareCycle,
+                ':cpbTime'              => $device->CpbTime,
+                ':pumpSpeed'            => $device->PumpSpeed,
+                ':pumpWatts'            => $device->PumpWatts,
+                ':pumpFlow'             => $device->PumpFlow,
+                ':pumpFlowSettling'     => $device->PumpFlowSettling,
+                ':referringClinician'   => $device->ReferringClinician,
+                ':proctorName'          => $device->ProctorName,
+                ':outflowGraft'            => $device->OutflowGraf,
+                ':sterileSurgicalTools'    => $device->SterileSurgicalTools,
+                ':drivelineExtensionCable' => $device->DrivelineExtensionCable,
+                ':shoulderBag'             => $device->ShoulderBag,
+                ':showerBag'               => $device->ShowerBag,
+                ':batteryCharger'          => $device->BatteryCharger,
+                ':batteryChargerACAdapter' => $device->BatteryChargerACAdapter,
+                ':dCAdaptor'               => $device->DCAdaptor,
+                ':mainController'          => $device->MainController,
+                ':batteryChargerACAdapter' => $device->BatteryChargerACAdapter,
+                ':backUpController'        => $device->BackUpController,
+                ':main'                    => $device->Main,
+                ':backUp'                  => $device->BackUp,
+                ':batterySerial1'          => $device->BatterySerial1,
+                ':batterySerial2'          => $device->BatterySerial2,
+                ':batterySerial3'          => $device->BatterySerial3,
+                ':batterySerial4'          => $device->BatterySerial4,
+                ':batterySerial5'          => $device->BatterySerial5,
+                ':batterySerial6'          => $device->BatterySerial6,
+                ':batterySerial7'          => $device->BatterySerial7,
+                ':batterySerial8'          => $device->BatterySerial8,
+                ':monitor'                 => $device->Monitor,
+                ':monitorACAdapter'        => $device->MonitorACAdapter,
+                ':outflowGraftRef'            => $device->OutflowGrafRef,
+                ':sterileSurgicalToolsRef'    => $device->SterileSurgicalToolsRef,
+                ':drivelineExtensionCableRef' => $device->DrivelineExtensionCableRef,
+                ':shoulderBagRef'             => $device->ShoulderBagRef,
+                ':showerBagRef'               => $device->ShowerBagRef,
+                ':batteryChargerRef'          => $device->BatteryChargerRef,
+                ':batteryChargerACAdapterRef' => $device->BatteryChargerACAdapterRef,
+                ':dCAdaptorRef'               => $device->DCAdaptorRef,
+                ':mainControllerRef'          => $device->MainControllerRef,
+                ':batteryChargerACAdapterRef' => $device->BatteryChargerACAdapterRef,
+                ':backUpControllerRef'        => $device->BackUpControllerRef,
+                ':mainRef'                    => $device->MainRef,
+                ':backUpRef'                  => $device->BackUpRef,
+                ':batterySerial1Ref'          => $device->BatterySerial1Ref,
+                ':batterySerial2Ref'          => $device->BatterySerial2Ref,
+                ':batterySerial3Ref'          => $device->BatterySerial3Ref,
+                ':batterySerial4Ref'          => $device->BatterySerial4Ref,
+                ':batterySerial5Ref'          => $device->BatterySerial5Ref,
+                ':batterySerial6Ref'          => $device->BatterySerial6Ref,
+                ':batterySerial7Ref'          => $device->BatterySerial7Ref,
+                ':batterySerial8Ref'          => $device->BatterySerial8Ref,
+                ':monitorRef'                 => $device->MonitorRef,
+                ':monitorACAdapterRef'        => $device->MonitorACAdapterRef
 
+
+            ));
 
             if ($result == false)
                 return false;
@@ -194,5 +245,386 @@ class PatientRepository extends BaseRepository
 
         return false;
     }
+    public function UpdateImplant(Implant $device, Patient $patient)
+    {
+        try {
+            $this->getConnection()->beginTransaction();
+
+            $patientQuery = "UPDATE patient SET
+                              operatorID = :operatorID, 
+                              tckimlikNo = :tckimlikNo, 
+                              firstname_pat = :firstname_pat, 
+                              adress_pat = :adress_pat, 
+                              patientID = :patientID,
+                              patientAge = :patientAge,
+                              patientWeight = :patientWeight,
+                              patientGender = :patientGender,
+                              patientHistory = :patientHistory,
+                              patientBsa = :patientBsa
+                              WHERE patientID = ".$this->getConnection()->quote($patient->PatientID);
+
+            $patientResult = $this->getConnection()->prepare($patientQuery);
+            $patientResult->execute(array(
+                ':patientID' =>$patient->PatientID,
+                ':operatorID' => 2,
+                ':tckimlikNo' => $patient->TCKimlikNo,
+                ':firstname_pat' => $patient->FirstnameOfPat,
+                ':adress_pat' => $patient->AdressOfPat,
+                ':patientAge' => $patient->PatientAge,
+                ':patientWeight' => $patient->PatientWeight,
+                ':patientGender' => $patient->PatientGender,
+                ':patientHistory' => $patient->PatientHistory,
+                ':patientBsa' => $patient->PatientBsa
+            ));
+
+            if ($patientResult == false)
+                return false;
+            $numItems = count($patient->PhoneNumbers);
+
+            if($numItems > 0){
+            $numItems = count($patient->PhoneNumbers);
+            $i = 0;
+            foreach ($patient->PhoneNumbers as $phoneNumber) {
+
+                $phoneQuery = " UPDATE phone_no_pat SET patientID = '".$patient->PatientID."', phone_no =".$phoneNumber->PhoneNumber." WHERE phonenoID = ".$phoneNumber->PhoneNoID;
+
+                $phoneResult = $this->getConnection()->prepare($phoneQuery);
+                $phoneResult->execute();
+
+                if ($phoneResult === false)
+                    return false;
+            }
+
+            }
+
+            $query = "UPDATE implant SET
+                      patientID =  :patientID, 
+                      HVADPumpID = :HVADPumpID, 
+                      hospitalID = :hospitalID,
+                      implant_date = :implant_date,
+                      status_date = :status_date,
+                      patient_status = :patient_status, 
+                      descr_dev_of_pat = :descr_dev_of_pat, 
+                      stay_duration_of_dev = :stay_duration_of_dev,
+                      qty = :qty,
+                      on_device = :on_device,
+                      tx = :tx,
+                      ex = :ex,
+                      surgicalImplant = :surgicalImplant,
+                      implantType = :implantType,
+                      surgeon = :surgeon,
+                      intermacsLevel = :intermacsLevel,
+                      etiology = :etiology,
+                      lavareCycle = :lavareCycle,
+                      cpbTime = :cpbTime,
+                      pumpSpeed = :pumpSpeed,
+                      pumpWatts = :pumpWatts,
+                      pumpFlow = :pumpFlow,
+                      pumpFlowSettling = :pumpFlowSettling,
+                      referringClinician = :referringClinician,
+                      proctorName = :proctorName,
+                      outflowGraft = :outflowGraft,
+                      sterileSurgicalTools = :sterileSurgicalTools,
+                      drivelineExtensionCable = :drivelineExtensionCable,
+                      shoulderBag = :shoulderBag,
+                      showerBag = :showerBag,
+                      batteryCharger = :batteryCharger,
+                      batteryChargerACAdapter = :batteryChargerACAdapter,
+                      dCAdaptor = :dCAdaptor,
+                      mainController = :mainController,
+                      backUpController = :backUpController,
+                      main = :main,
+                      backUp = :backUp, 
+                      batterySerial1 = :batterySerial1,
+                      batterySerial2 = :batterySerial2,
+                      batterySerial3 = :batterySerial3,
+                      batterySerial4 = :batterySerial4,
+                      batterySerial5 = :batterySerial5,
+                      batterySerial6 = :batterySerial6,
+                      batterySerial7 = :batterySerial7,
+                      batterySerial8 = :batterySerial8,
+                      monitor = :monitor,
+                      monitorACAdapter = :monitorACAdapter,   
+                      outflowGraftRef = :outflowGraftRef,
+                      sterileSurgicalToolsRef = :sterileSurgicalToolsRef,
+                      drivelineExtensionCableRef = :drivelineExtensionCableRef,
+                      shoulderBagRef = :shoulderBagRef,
+                      showerBagRef = :showerBagRef,
+                      batteryChargerRef = :batteryChargerRef,
+                      batteryChargerACAdapterRef = :batteryChargerACAdapterRef,
+                      dCAdaptorRef = :dCAdaptorRef,
+                      mainControllerRef = :mainControllerRef,
+                      backUpControllerRef = :backUpControllerRef,
+                      mainRef = :mainRef,
+                      backUpRef = :backUpRef, 
+                      batterySerial1Ref = :batterySerial1Ref,
+                      batterySerial2Ref = :batterySerial2Ref,
+                      batterySerial3Ref = :batterySerial3Ref,
+                      batterySerial4Ref = :batterySerial4Ref,
+                      batterySerial5Ref = :batterySerial5Ref,
+                      batterySerial6Ref = :batterySerial6Ref,
+                      batterySerial7Ref = :batterySerial7Ref,
+                      batterySerial8Ref = :batterySerial8Ref,
+                      monitorRef = :monitorRef,
+                      monitorACAdapterRef = :monitorACAdapterRef
+              
+                      WHERE patientID = ".$this->getConnection()->quote($patient->PatientID);
+
+            $result = $this->getConnection()->prepare($query);
+           // var_dump($device->StatusDate);exit;
+            $result->execute(array(
+                ':patientID'            => $device->PatientID,
+                ':HVADPumpID'           => $device->HVADPumpID,
+                ':hospitalID'           => $device->HospitalID,
+                ':implant_date'         => $device->ImplantDate,
+                ':status_date'          => $device->StatusDate,
+                ':patient_status'       => $device->PatientStatus,
+                ':descr_dev_of_pat'     => $device->DescrDevOfPat,
+                ':stay_duration_of_dev' => $device->StayDurationOfDev,
+                ':qty'                  => $device->Qty,
+                ':on_device'            => (int)$device->OnDevice,
+                ':ex'                   => (int)$device->Ex,
+                ':tx'                   => (int)$device->Tx,
+                ':surgicalImplant'      => $device->SurgicalImplant,
+                ':implantType'          => $device->ImplantType,
+                ':surgeon'              => $device->Surgeon,
+                ':intermacsLevel'       => $device->IntermacsLevel,
+                ':etiology'             => $device->Etiology,
+                ':lavareCycle'          => $device->LavareCycle,
+                ':cpbTime'              => $device->CpbTime,
+                ':pumpSpeed'            => $device->PumpSpeed,
+                ':pumpWatts'            => $device->PumpWatts,
+                ':pumpFlow'             => $device->PumpFlow,
+                ':pumpFlowSettling'     => $device->PumpFlowSettling,
+                ':referringClinician'   => $device->ReferringClinician,
+                ':proctorName'          => $device->ProctorName,
+                ':outflowGraft'            => $device->OutflowGraf,
+                ':sterileSurgicalTools'    => $device->SterileSurgicalTools,
+                ':drivelineExtensionCable' => $device->DrivelineExtensionCable,
+                ':shoulderBag'             => $device->ShoulderBag,
+                ':showerBag'               => $device->ShowerBag,
+                ':batteryCharger'          => $device->BatteryCharger,
+                ':batteryChargerACAdapter' => $device->BatteryChargerACAdapter,
+                ':dCAdaptor'               => $device->DCAdaptor,
+                ':mainController'          => $device->MainController,
+                ':batteryChargerACAdapter' => $device->BatteryChargerACAdapter,
+                ':backUpController'        => $device->BackUpController,
+                ':main'                    => $device->Main,
+                ':backUp'                  => $device->BackUp,
+                ':batterySerial1'          => $device->BatterySerial1,
+                ':batterySerial2'          => $device->BatterySerial2,
+                ':batterySerial3'          => $device->BatterySerial3,
+                ':batterySerial4'          => $device->BatterySerial4,
+                ':batterySerial5'          => $device->BatterySerial5,
+                ':batterySerial6'          => $device->BatterySerial6,
+                ':batterySerial7'          => $device->BatterySerial7,
+                ':batterySerial8'          => $device->BatterySerial8,
+                ':monitor'                 => $device->Monitor,
+                ':monitorACAdapter'        => $device->MonitorACAdapter,
+                ':outflowGraftRef'            => $device->OutflowGrafRef,
+                ':sterileSurgicalToolsRef'    => $device->SterileSurgicalToolsRef,
+                ':drivelineExtensionCableRef' => $device->DrivelineExtensionCableRef,
+                ':shoulderBagRef'             => $device->ShoulderBagRef,
+                ':showerBagRef'               => $device->ShowerBagRef,
+                ':batteryChargerRef'          => $device->BatteryChargerRef,
+                ':batteryChargerACAdapterRef' => $device->BatteryChargerACAdapterRef,
+                ':dCAdaptorRef'               => $device->DCAdaptorRef,
+                ':mainControllerRef'          => $device->MainControllerRef,
+                ':batteryChargerACAdapterRef' => $device->BatteryChargerACAdapterRef,
+                ':backUpControllerRef'        => $device->BackUpControllerRef,
+                ':mainRef'                    => $device->MainRef,
+                ':backUpRef'                  => $device->BackUpRef,
+                ':batterySerial1Ref'          => $device->BatterySerial1Ref,
+                ':batterySerial2Ref'          => $device->BatterySerial2Ref,
+                ':batterySerial3Ref'          => $device->BatterySerial3Ref,
+                ':batterySerial4Ref'          => $device->BatterySerial4Ref,
+                ':batterySerial5Ref'          => $device->BatterySerial5Ref,
+                ':batterySerial6Ref'          => $device->BatterySerial6Ref,
+                ':batterySerial7Ref'          => $device->BatterySerial7Ref,
+                ':batterySerial8Ref'          => $device->BatterySerial8Ref,
+                ':monitorRef'                 => $device->MonitorRef,
+                ':monitorACAdapterRef'        => $device->MonitorACAdapterRef
+            ));
+
+            if ($result == false)
+                return false;
+
+            $this->getConnection()->commit();
+            return true;
+        } catch (Exception $e) {
+            $this->getConnection()->rollBack();
+            return false;
+        }
+
+        return false;
+    }
+
+    public function GetImplant($offset = 0, $limit = 5, $searchKey = null)
+    {
+        try {
+            $countQuery='SELECT COUNT(*) as row_count 
+                FROM implant i 
+                INNER JOIN patient p ON p.patientID = i.patientID 
+                INNER JOIN hospital h ON h.ID = i.hospitalID';
+            if($searchKey !== null)
+            {
+                $countQuery .=' WHERE p.firstname_pat
+                        LIKE "%'.$searchKey.'%" OR h.name_hosp LIKE "%'.$searchKey.'%"';
+            }
+
+            $countResult = $this->getConnection()->prepare($countQuery);
+            $countResult->execute();
+            $countResult = $countResult->fetch();
+            if($countResult === null || (int)$countResult['row_count'] == 0)
+                return new PagedList(null,0,$limit,$searchKey);
+
+            $query = "SELECT i.*,p.*,h.name_hosp
+                    FROM implant i 
+                    INNER JOIN patient p ON p.patientID = i.patientID 
+                    INNER JOIN hospital h ON h.ID = i.hospitalID";
+            if($searchKey !== null){
+                $query .=' WHERE p.firstname_pat
+                        LIKE "%'.$searchKey.'%" OR h.name_hosp LIKE "%'.$searchKey.'%"';
+            }
+           // $query .=' LIMIT '.$offset.','.$limit;
+
+            $result = $this->getConnection()->prepare($query);
+            $result->execute();
+            $results = $result->fetchAll();
+
+            if($results == false)
+                return new PagedList(null, 0,$limit,$searchKey);
+
+            $phoneQuery="SELECT pnp.* 
+                        FROM phone_no_pat pnp
+                        WHERE pnp.patientID = :patientID";
+            $resultPhone = $this->getConnection()->prepare($phoneQuery);
+            $implant = array();
+
+            foreach ($results as $result){
+
+                $resultPhone->execute(array(
+                    ':patientID' => $result["patientID"]
+                ));
+                $result["phoneNumbers"] = $resultPhone->fetchAll();
+
+                $implant[] = (new Implant())->MapFrom($result);
+            }
+            $list = new PagedList($implant,(int)$countResult['row_count'],$limit,$searchKey);
+
+            return $list;
+
+        } catch (Exception $e) {
+            return false;
+        }
+
+
+
+    }
+    public function GetImplantByPatientId($patientID)
+    {
+        try {
+
+            $query = "SELECT i.*,p.*,h.name_hosp
+                    FROM implant i 
+                    INNER JOIN patient p ON p.patientID = i.patientID 
+                    INNER JOIN hospital h ON h.ID = i.hospitalID
+                    WHERE p.patientID =".$this->getConnection()->quote($patientID);
+
+
+            $result = $this->getConnection()->prepare($query);
+            $result->execute();
+            $results = $result->fetchAll();
+
+            if($results == false)
+                return false;
+
+            $phoneQuery="SELECT pnp.* 
+                        FROM phone_no_pat pnp
+                        WHERE pnp.patientID = :patientID";
+            $resultPhone = $this->getConnection()->prepare($phoneQuery);
+
+
+            foreach ($results as $result){
+
+                $resultPhone->execute(array(
+                    ':patientID' => $result["patientID"]
+                ));
+                $result["phoneNumbers"] = $resultPhone->fetchAll();
+
+
+            }
+
+            $implant = (new Implant())->MapFrom($result);
+
+            return $implant;
+
+        } catch (Exception $e) {
+            return false;
+        }
+
+
+
+    }
+
+    public function UpdateImplantOnDevice()
+    {
+        try {
+            $this->getConnection()->beginTransaction();
+            $query = 'UPDATE implant SET 
+                      status_date = NOW() 
+                      WHERE on_device = 1 AND tx = 0 AND ex = 0 ';
+
+            $result = $this->getConnection()->prepare($query);
+
+            $result->execute();
+
+            if ($result === false)
+                return false;
+
+
+
+            $queryDay = 'UPDATE implant SET 
+                          stay_duration_of_dev = DATEDIFF(status_date, implant_date) 
+                          WHERE on_device = 1  AND tx = 0 AND ex = 0 ';
+
+            $resultDay = $this->getConnection()->prepare($queryDay);
+
+            $resultDay->execute();
+
+            if ($resultDay === false)
+                return false;
+
+            $this->getConnection()->commit();
+
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    public function GetImplantCount()
+    {
+        try {
+
+            $query = "Select COUNT(*) AS implant_count 
+                      FROM implant";
+
+            $result = $this->getConnection()->prepare($query);
+            $result->execute();
+            $result = $result->fetch();
+
+            if($result == false)
+                return false;
+
+            return $result;
+
+        } catch (Exception $e) {
+            return false;
+        }
+        
+    }
+
+
 
 }

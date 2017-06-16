@@ -50,8 +50,11 @@ class HospitalController extends BaseController
      */
     public function HospitalAddAction(Request $request)
     {
+        $cities = $this->_hospitalRepo->GetAllCity();
 
-        return array();
+        return array(
+            'cities' => $cities
+        );
     }
 
     /**

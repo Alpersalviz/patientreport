@@ -22,11 +22,9 @@
                                 <div class="form-group">
                                     <label>City :</label>
                                     <select data-validation="required" name="city" id="city" class="form-control">
-                                        <option>İzmir</option>
-                                        <option>İstanbul</option>
-                                        <option>Ankara</option>
-                                        <option>Antalya</option>
-                                        <option>Antep</option>
+                                        {% for city in cities %}
+                                            <option value="{{ city.ID }}">{{ city.City }}</option>
+                                        {% endfor %}
                                     </select>
                                 </div>
 
@@ -74,6 +72,11 @@
         }
 
         $(document).ready(function () {
+            $.validate({
+                validateOnBlur : false,
+                errorMessagePosition : 'top',
+                scrollToTopOnError : false
+            });
             $.validate({
                 validateOnBlur : false,
                 errorMessagePosition : 'top',

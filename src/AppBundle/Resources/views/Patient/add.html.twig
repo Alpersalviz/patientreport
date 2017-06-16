@@ -21,21 +21,21 @@
                                     <label>Patient ID :</label>
                                     <input  data-validation="required"  data-validation-error-msg="Can not Empty" type="text" name="patientId" id="patientId" tabindex="1" class="form-control">
                                 </div>
-                                <div class="form-group">
+                                    <div class="form-group">
+                                        <label>Full Name :</label>
+                                        <input  data-validation="required"  data-validation-error-msg="Can not Empty" type="text" name="firstName" id="firstName" tabindex="1" class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
                                     <label>TR Identity No :</label>
 
-                                    <input  data-validation="required"  data-validation-error-msg="Can not Empty" type="text" name="identityNo" id="identityNo" tabindex="1" class="form-control">
+                                    <input type="text" name="identityNo" id="identityNo" tabindex="1" class="form-control">
                                 </div>
                                     <div class="form-group">
                                         <label for="disabledSelect">Adress :</label>
                                         <textarea class="form-control" id="textarea-size"  name="adress"  placeholder="Add a address" rows="3"></textarea>
                                     </div>
-                            </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                    <div class="form-group">
-                                        <label>Full Name :</label>
-                                        <input  data-validation="required"  data-validation-error-msg="Can not Empty" type="text" name="firstName" id="firstName" tabindex="1" class="form-control">
-                                    </div>
+
 
                                     <div class="form-group" id="phone">
                                         <label>Phone :</label>
@@ -44,6 +44,39 @@
                                         <button id="btn-phone" type="button" class="btn btn-primary">+</button>
 
                                     </div>
+                            </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+
+
+                                    <div class="form-group">
+                                        <label>Patient Age :</label>
+                                        <input type="text" name="patientAge" id="patientAge" tabindex="1" class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Patient Weigh :</label>
+                                        <input type="text" name="patientWeight" id="patientWeight" tabindex="1" class="form-control">
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label>Patient Gender :</label>
+                                        <input type="text" name="patientGender" id="patientGender" tabindex="1" class="form-control">
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label>Patient History :</label>
+                                        <input type="text" name="patientHistory" id="patientHistory" tabindex="1" class="form-control">
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label>Patient Bsa :</label>
+                                        <input type="text" name="patientBsa" id="patientBsa" tabindex="1" class="form-control">
+                                    </div>
+
+
                                 </div>
 
                                 <hr style="width: 100%">
@@ -75,7 +108,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Quantitiy of Device :</label>
-                                    <input data-validation="required"  data-validation-error-msg="Can not Empty" type="text" name="quantitiyofDevice" id="quantitiyofDevice" tabindex="1" class="form-control">
+                                    <input data-validation="number"  data-validation-error-msg="Can not String" type="text" name="quantitiyofDevice" id="quantitiyofDevice" tabindex="1" class="form-control">
                                 </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -90,29 +123,357 @@
                                         <input type='date' name="statusDate" id="statusDate" class="form-control" />
                                         <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
+
                                         </span>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label>How long stayed on device (days) :</label>
-                                    <input data-validation="required"  value="0" data-validation-error-msg="Can not Empty" type="text" name="stayedOnDevice" id="stayedOnDevice" tabindex="1" class="form-control">
+                                    <input data-validation="required"  value="1" data-validation-error-msg="Can not Empty" type="text" name="stayedOnDevice" id="stayedOnDevice" tabindex="1" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="disabledSelect">Note :</label>
                                     <textarea class="form-control" id="textarea-size" name="note" placeholder="Take a note" rows="3"></textarea>
                                 </div>
-
-
-
                                         <div class="form-group">
                                             <div class="checkbox">
                                                 <label><input name="on_device" type="checkbox" value="1" checked>On Device</label>
                                             </div>
                                         </div>
-
+                                        <div class="form-group">
+                                            <div class="checkbox">
+                                                <label><input name="tx" type="checkbox" value="0">Tx</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="checkbox">
+                                                <label><input name="ex" type="checkbox" value="0">Ex</label>
+                                            </div>
+                                        </div>
                                 </div>
 
                                 </div>
+
+
+                                    <div class="col-lg-12 implant-form-ex">
+                                        <h4><a href="#implantForm" data-toggle="collapse">Implant Form</a></h4>
+
+                                        <div id="implantForm" class="collapse">
+                                        <div class="form-group">
+                                            <label>Surgical Implant:</label>
+                                            <input type="text" name="surgicalImplant" id="surgicalImplant" tabindex="1" class="form-control">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Implant Type:</label>
+                                            <input type="text" name="implantType" id="implantType" tabindex="1" class="form-control">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Surgeon :</label>
+                                            <input type="text" name="surgeon" id="surgeon" tabindex="1" class="form-control">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Intermacs Level :</label>
+                                            <input type="text" name="intermacsLevel" id="intermacsLevel" tabindex="1" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Etiology :</label>
+                                            <input type="text" name="etiology" id="etiology" tabindex="1" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Lavare Cycle :</label>
+                                            <input type="text" name="lavareCycle" id="lavareCycle" tabindex="1" class="form-control">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>CPB Time :</label>
+                                            <input type="text" name="cpbTime" id="cpbTime" tabindex="1" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Pump Speed :</label>
+                                            <input type="text" name="pumpSpeed" id="pumpSpeed" tabindex="1" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Pump Watts :</label>
+                                            <input type="text" name="pumpWatts" id="pumpWatts" tabindex="1" class="form-control">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Pump Flow :</label>
+                                            <input type="text" name="pumpFlow" id="pumpFlow" tabindex="1" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Pump Flow Settling :</label>
+                                            <input type="text" name="pumpFlowSettling" id="pumpFlowSettling" tabindex="1" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Referring Clinician :</label>
+                                            <input type="text" name="referringClinician" id="referringClinician" tabindex="1" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Proctor Name :</label>
+                                            <input type="text" name="proctorName" id="proctorName" tabindex="1" class="form-control">
+                                        </div>
+
+
+
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                    <div class="col-lg-12 setDetail-form-ex">
+                                        <h4><a href="#detailForm" data-toggle="collapse">Set Detail</a></h4>
+
+                                        <div id="detailForm" class="collapse">
+                                            <div class="col-lg-6">
+                                                Serial Number
+                                                <div class="form-group">
+                                                    <label>Outflow Graft:</label>
+                                                    <input type="text" name="outflowGraft" id="outflowGraft" tabindex="1" class="form-control">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Sterile Surgical Tools:</label>
+                                                    <input type="text" name="sterileSurgicalTools" id="sterileSurgicalTools" tabindex="1" class="form-control">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Driveline Extension Cable:</label>
+                                                    <input type="text" name="drivelineExtensionCable" id="drivelineExtensionCable" tabindex="1" class="form-control">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Shoulder Bag:</label>
+                                                    <input type="text" name="shoulderBag" id="shoulderBag" tabindex="1" class="form-control">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Shower Bag:</label>
+                                                    <input type="text" name="showerBag" id="showerBag" tabindex="1" class="form-control">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Battery Charger:</label>
+                                                    <input type="text" name="batteryCharger" id="batteryCharger" tabindex="1" class="form-control">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Battery Charger AC Adapter:</label>
+                                                    <input type="text" name="batteryChargerACAdapter" id="batteryChargerACAdapter" tabindex="1" class="form-control">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>DC Adaptor:</label>
+                                                    <input type="text" name="dCAdaptor" id="dCAdaptor" tabindex="1" class="form-control">
+                                                </div>
+
+                                                <div class="form-group" style="border: 1px solid #337ab7; border-radius: 16px; padding: 5px;">
+                                                    Controller Serial #s
+                                                    <div class="form-group">
+                                                    <label>Main Controller:</label>
+                                                    <input type="text" name="mainController" id="mainController" tabindex="1" class="form-control">
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                    <label>Back-Up Controller:</label>
+                                                    <input type="text" name="backUpController" id="backUpController" tabindex="1" class="form-control">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group" style="border: 1px solid #337ab7; border-radius: 16px; padding: 5px;">
+                                                    AC Adapter Serial #s
+                                                        <div class="form-group">
+                                                            <label>Main:</label>
+                                                            <input type="text" name="main" id="main" tabindex="1" class="form-control">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Back-Up:</label>
+                                                            <input type="text" name="backUp" id="backUp" tabindex="1" class="form-control">
+                                                        </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Battery Serial 1:</label>
+                                                    <input type="text" name="batterySerial1" id="batterySerial1" tabindex="1" class="form-control">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Battery Serial 2:</label>
+                                                    <input type="text" name="batterySerial2" id="batterySerial2" tabindex="1" class="form-control">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Battery Serial 3:</label>
+                                                    <input type="text" name="batterySerial3" id="batterySerial3" tabindex="1" class="form-control">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Battery Serial 4:</label>
+                                                    <input type="text" name="batterySerial4" id="batterySerial4" tabindex="1" class="form-control">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Battery Serial 5:</label>
+                                                    <input type="text" name="batterySerial5" id="batterySerial5" tabindex="1" class="form-control">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Battery Serial 6:</label>
+                                                    <input type="text" name="batterySerial6" id="batterySerial6" tabindex="1" class="form-control">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Battery Serial 7:</label>
+                                                    <input type="text" name="batterySerial7" id="batterySerial7" tabindex="1" class="form-control">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Battery Serial 8:</label>
+                                                    <input type="text" name="batterySerial8" id="batterySerial8" tabindex="1" class="form-control">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Monitor:</label>
+                                                    <input type="text" name="monitor" id="monitor" tabindex="1" class="form-control">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Monitor AC Adapter:</label>
+                                                    <input type="text" name="monitorACAdapter" id="monitorACAdapter" tabindex="1" class="form-control">
+                                                </div>
+
+
+
+                                            </div>
+
+                                            <div class="col-lg-6">
+                                                Ref
+                                                <div class="form-group">
+                                                    <label>Outflow Graft:</label>
+                                                    <input type="text" name="outflowGraftRef" id="outflowGraftRef" tabindex="1" class="form-control">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Sterile Surgical Tools:</label>
+                                                    <input type="text" name="sterileSurgicalToolsRef" id="sterileSurgicalToolsRef" tabindex="1" class="form-control">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Driveline Extension Cable:</label>
+                                                    <input type="text" name="drivelineExtensionCableRef" id="drivelineExtensionCableRef" tabindex="1" class="form-control">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Shoulder Bag:</label>
+                                                    <input type="text" name="shoulderBagRef" id="shoulderBagRef" tabindex="1" class="form-control">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Shower Bag:</label>
+                                                    <input type="text" name="showerBagRef" id="showerBagRef" tabindex="1" class="form-control">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Battery Charger:</label>
+                                                    <input type="text" name="batteryChargerRef" id="batteryChargerRef" tabindex="1" class="form-control">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Battery Charger AC Adapter:</label>
+                                                    <input type="text" name="batteryChargerACAdapterRef" id="batteryChargerACAdapterRef" tabindex="1" class="form-control">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>DC Adaptor:</label>
+                                                    <input type="text" name="dCAdaptorRef" id="dCAdaptorRef" tabindex="1" class="form-control">
+                                                </div>
+
+                                                <div class="form-group" style="border: 1px solid #337ab7; border-radius: 16px; padding: 5px;">
+                                                    Controller Serial #s
+                                                    <div class="form-group">
+                                                        <label>Main Controller:</label>
+                                                        <input type="text" name="mainControllerRef" id="mainControllerRef" tabindex="1" class="form-control">
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Back-Up Controller:</label>
+                                                        <input type="text" name="backUpControllerRef" id="backUpControllerRef" tabindex="1" class="form-control">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group" style="border: 1px solid #337ab7; border-radius: 16px; padding: 5px;">
+                                                    AC Adapter Serial #s
+                                                    <div class="form-group">
+                                                        <label>Main:</label>
+                                                        <input type="text" name="mainRef" id="mainRef" tabindex="1" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Back-Up:</label>
+                                                        <input type="text" name="backUpRef" id="backUpRef" tabindex="1" class="form-control">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Battery Serial 1:</label>
+                                                    <input type="text" name="batterySerial1Ref" id="batterySerial1Ref" tabindex="1" class="form-control">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Battery Serial 2:</label>
+                                                    <input type="text" name="batterySerial2Ref" id="batterySerial2Ref" tabindex="1" class="form-control">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Battery Serial 3:</label>
+                                                    <input type="text" name="batterySerial3Ref" id="batterySerial3Ref" tabindex="1" class="form-control">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Battery Serial 4:</label>
+                                                    <input type="text" name="batterySerial4Ref" id="batterySerial4Ref" tabindex="1" class="form-control">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Battery Serial 5:</label>
+                                                    <input type="text" name="batterySerial5Ref" id="batterySerial5Ref" tabindex="1" class="form-control">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Battery Serial 6:</label>
+                                                    <input type="text" name="batterySerial6Ref" id="batterySerial6Ref" tabindex="1" class="form-control">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Battery Serial 7:</label>
+                                                    <input type="text" name="batterySerial7Ref" id="batterySerial7Ref" tabindex="1" class="form-control">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Battery Serial 8:</label>
+                                                    <input type="text" name="batterySerial8Ref" id="batterySerial8Ref" tabindex="1" class="form-control">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Monitor:</label>
+                                                    <input type="text" name="monitorRef" id="monitoRefr" tabindex="1" class="form-control">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Monitor AC Adapter:</label>
+                                                    <input type="text" name="monitorACAdapterRef" id="monitorACAdapterRef" tabindex="1" class="form-control">
+                                                </div>
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 <button type="submit" class="btn btn-primary">Save</button>
                             </form>
                         </div>
@@ -132,7 +493,9 @@
 {% block javascripts %}
     <script type="text/javascript">
                 var mask = "(999) 999-9999";
-                var ischecked = 1;
+                var ischeckedOnDevice = 1;
+                var ischeckedTx = 0;
+                var ischeckedEx= 0;
 
                 var phoneNumbers=[];
                 var Patient={
@@ -155,32 +518,171 @@
                             Desc:               $('#device-add textarea[name ="note"]'),
                             HVADPumpID:         $('#device-add input[name ="HVADPumpID"]'),
                             Qty:                $('#device-add input[name ="quantitiyofDevice"]'),
-                            IsOnDevice:         $('#device-add input[name ="on_device"]')
+                            IsOnDevice:         $('#device-add input[name ="on_device"]'),
+
+                            SurgicalImplant:    $('#device-add input[name ="surgicalImplant"]'),
+                            ImplantType:        $('#device-add input[name ="implantType"]'),
+                            Surgeon:            $('#device-add input[name ="surgeon"]'),
+                            IntermacsLevel:     $('#device-add input[name ="intermacsLevel"]'),
+                            Etiology:           $('#device-add input[name ="etiology"]'),
+                            LavareCycle:        $('#device-add input[name ="lavareCycle"]'),
+                            CpbTime:            $('#device-add input[name ="cpbTime"]'),
+                            PumpSpeed:          $('#device-add input[name ="pumpSpeed"]'),
+                            PumpWatts:          $('#device-add input[name ="pumpWatts"]'),
+                            PumpFlow:           $('#device-add input[name ="pumpFlow"]'),
+                            PumpFlowSettling:   $('#device-add input[name ="pumpFlowSettling"]'),
+                            ReferringClinician: $('#device-add input[name ="referringClinician"]'),
+                            ProctorName:        $('#device-add input[name ="proctorName"]'),
+
+                            PatientAge:        $('#device-add input[name ="patientAge"]'),
+                            PatientWeight:     $('#device-add input[name ="patientWeight"]'),
+                            PatientGender:     $('#device-add input[name ="patientGender"]'),
+                            PatientHistory:    $('#device-add input[name ="patientHistory"]'),
+                            PatientBsa:        $('#device-add input[name ="patientBsa"]'),
+
+                            OutflowGraft:        $('#device-add input[name ="outflowGraft"]'),
+                            SterileSurgicalTools: $('#device-add input[name ="sterileSurgicalTools"]'),
+                            DrivelineExtensionCable: $('#device-add input[name ="drivelineExtensionCable"]'),
+                            ShoulderBag: $('#device-add input[name ="shoulderBag"]'),
+                            ShowerBag: $('#device-add input[name ="showerBag"]'),
+                            BatteryCharger: $('#device-add input[name ="batteryCharger"]'),
+                            BatteryChargerACAdapter: $('#device-add input[name ="batteryChargerACAdapter"]'),
+                            DCAdaptor: $('#device-add input[name ="dCAdaptor"]'),
+                            MainController: $('#device-add input[name ="mainController"]'),
+                            BackUpController: $('#device-add input[name ="backUpController"]'),
+                            Main: $('#device-add input[name ="main"]'),
+                            BackUp: $('#device-add input[name ="backUp"]'),
+                            BatterySerial1: $('#device-add input[name ="batterySerial1"]'),
+                            BatterySerial2: $('#device-add input[name ="batterySerial2"]'),
+                            BatterySerial3: $('#device-add input[name ="batterySerial3"]'),
+                            BatterySerial4: $('#device-add input[name ="batterySerial4"]'),
+                            BatterySerial5: $('#device-add input[name ="batterySerial5"]'),
+                            BatterySerial6: $('#device-add input[name ="batterySerial6"]'),
+                            BatterySerial7: $('#device-add input[name ="batterySerial7"]'),
+                            BatterySerial8: $('#device-add input[name ="batterySerial8"]'),
+                            Monitor: $('#device-add input[name ="monitor"]'),
+                            MonitorACAdapter: $('#device-add input[name ="monitorACAdapter"]'),
+
+                            OutflowGraftRef:        $('#device-add input[name ="outflowGraftRef"]'),
+                            SterileSurgicalToolsRef: $('#device-add input[name ="sterileSurgicalToolsRef"]'),
+                            DrivelineExtensionCableRef: $('#device-add input[name ="drivelineExtensionCableRef"]'),
+                            ShoulderBagRef: $('#device-add input[name ="shoulderBagRef"]'),
+                            ShowerBagRef: $('#device-add input[name ="showerBagRef"]'),
+                            BatteryChargerRef: $('#device-add input[name ="batteryChargerRef"]'),
+                            BatteryChargerACAdapterRef: $('#device-add input[name ="batteryChargerACAdapterRef"]'),
+                            DCAdaptorRef: $('#device-add input[name ="dCAdaptorRef"]'),
+                            MainControllerRef: $('#device-add input[name ="mainControllerRef"]'),
+                            BackUpControllerRef: $('#device-add input[name ="backUpControllerRef"]'),
+                            MainRef: $('#device-add input[name ="mainRef"]'),
+                            BackUpRef: $('#device-add input[name ="backUpRef"]'),
+                            BatterySerial1Ref: $('#device-add input[name ="batterySerial1Ref"]'),
+                            BatterySerial2Ref: $('#device-add input[name ="batterySerial2Ref"]'),
+                            BatterySerial3Ref: $('#device-add input[name ="batterySerial3Ref"]'),
+                            BatterySerial4Ref: $('#device-add input[name ="batterySerial4Ref"]'),
+                            BatterySerial5Ref: $('#device-add input[name ="batterySerial5Ref"]'),
+                            BatterySerial6Ref: $('#device-add input[name ="batterySerial6Ref"]'),
+                            BatterySerial7Ref: $('#device-add input[name ="batterySerial7Ref"]'),
+                            BatterySerial8Ref: $('#device-add input[name ="batterySerial8Ref"]'),
+                            MonitorRef: $('#device-add input[name ="monitorRef"]'),
+                            MonitorACAdapterRef: $('#device-add input[name ="monitorACAdapterRef"]')
+
+
                         },
                         Values          : function(){
                             return {
                                 patient:{
-                                    ID:      null,
+                                    ID:             null,
                                     patientID:      Patient.Add.Fields.PatientID.val(),
                                     operatorID: {{ app.session.get('id') }},
                                     tckimlikNo:     Patient.Add.Fields.TCKimlikNo.val(),
                                     firstname_pat:  Patient.Add.Fields.FirstnameOfPat.val(),
                                     lastname_pat:   Patient.Add.Fields.LastnameOfPat.val(),
                                     adress_pat:     Patient.Add.Fields.AdressOfPat.val(),
-                                    phoneNumbers:   phoneNumbers
+                                    phoneNumbers:   phoneNumbers,
+                                    patientAge:     Patient.Add.Fields.PatientAge.val(),
+                                    patientWeight:  Patient.Add.Fields.PatientWeight.val(),
+                                    patientGender:  Patient.Add.Fields.PatientGender.val(),
+                                    patientHistory: Patient.Add.Fields.PatientHistory.val(),
+                                    patientBsa:     Patient.Add.Fields.PatientBsa.val()
+
                                 },
                                 device:{
-                                    ID:      null,
-                                    patientID:          Patient.Add.Fields.PatientID.val(),
-                                    HVADPumpID:          Patient.Add.Fields.HVADPumpID.val(),
-                                    hospitalID:         Patient.Add.Fields.HospitalID.val(),
-                                    implant_date:        Patient.Add.Fields.ImplantDate.val(),
-                                    status_date:         Patient.Add.Fields.StatusDate.val(),
-                                    patient_status:      Patient.Add.Fields.PatientStatus.val(),
-                                    desc_dev_of_pat:     Patient.Add.Fields.Desc.val(),
-                                    stay_duration_of_dev:  Patient.Add.Fields.StayDurationOfDev.val(),
-                                    qty:                Patient.Add.Fields.Qty.val(),
-                                    on_device:                ischecked
+                                    ID:                     null,
+                                    patientID:              Patient.Add.Fields.PatientID.val(),
+                                    HVADPumpID:             Patient.Add.Fields.HVADPumpID.val(),
+                                    hospitalID:             Patient.Add.Fields.HospitalID.val(),
+                                    implant_date:           Patient.Add.Fields.ImplantDate.val(),
+                                    status_date:            Patient.Add.Fields.StatusDate.val(),
+                                    patient_status:         Patient.Add.Fields.PatientStatus.val(),
+                                    descr_dev_of_pat:       Patient.Add.Fields.Desc.val(),
+                                    stay_duration_of_dev:   Patient.Add.Fields.StayDurationOfDev.val(),
+                                    qty:                    Patient.Add.Fields.Qty.val(),
+                                    on_device:              ischeckedOnDevice,
+                                    tx:                     ischeckedTx,
+                                    ex:                     ischeckedEx,
+                                    surgicalImplant:        Patient.Add.Fields.SurgicalImplant.val(),
+                                    implantType:            Patient.Add.Fields.ImplantType.val(),
+                                    surgeon:                Patient.Add.Fields.Surgeon.val(),
+                                    intermacsLevel:         Patient.Add.Fields.IntermacsLevel.val(),
+                                    etiology:               Patient.Add.Fields.Etiology.val(),
+                                    lavareCycle:            Patient.Add.Fields.LavareCycle.val(),
+                                    cpbTime:                Patient.Add.Fields.CpbTime.val(),
+                                    pumpSpeed:              Patient.Add.Fields.PumpSpeed.val(),
+                                    pumpWatts:              Patient.Add.Fields.PumpWatts.val(),
+                                    pumpFlow:               Patient.Add.Fields.PumpFlow.val(),
+                                    pumpFlowSettling:       Patient.Add.Fields.PumpFlowSettling.val(),
+                                    referringClinician:     Patient.Add.Fields.ReferringClinician.val(),
+                                    proctorName:            Patient.Add.Fields.ProctorName.val(),
+
+
+                                    outflowGraft:            Patient.Add.Fields.OutflowGraft.val(),
+                                    sterileSurgicalTools:    Patient.Add.Fields.SterileSurgicalTools.val(),
+                                    drivelineExtensionCable: Patient.Add.Fields.DrivelineExtensionCable.val(),
+                                    shoulderBag:             Patient.Add.Fields.ShoulderBag.val(),
+                                    showerBag:               Patient.Add.Fields.ShowerBag.val(),
+                                    batteryCharger:          Patient.Add.Fields.BatteryCharger.val(),
+                                    batteryChargerACAdapter: Patient.Add.Fields.BatteryChargerACAdapter.val(),
+                                    dCAdaptor:               Patient.Add.Fields.DCAdaptor.val(),
+                                    mainController:          Patient.Add.Fields.MainController.val(),
+                                    backUpController:        Patient.Add.Fields.BackUpController.val(),
+                                    main:                    Patient.Add.Fields.Main.val(),
+                                    backUp:                  Patient.Add.Fields.BackUp.val(),
+                                    batterySerial1:          Patient.Add.Fields.BatterySerial1.val(),
+                                    batterySerial2:          Patient.Add.Fields.BatterySerial2.val(),
+                                    batterySerial3:          Patient.Add.Fields.BatterySerial3.val(),
+                                    batterySerial4:          Patient.Add.Fields.BatterySerial4.val(),
+                                    batterySerial5:          Patient.Add.Fields.BatterySerial5.val(),
+                                    batterySerial6:          Patient.Add.Fields.BatterySerial6.val(),
+                                    batterySerial7:          Patient.Add.Fields.BatterySerial7.val(),
+                                    batterySerial8:          Patient.Add.Fields.BatterySerial8.val(),
+                                    monitor:                 Patient.Add.Fields.Monitor.val(),
+                                    monitorACAdapter:        Patient.Add.Fields.MonitorACAdapter.val(),
+
+                                    outflowGraftRef:            Patient.Add.Fields.OutflowGraftRef.val(),
+                                    sterileSurgicalToolsRef:    Patient.Add.Fields.SterileSurgicalToolsRef.val(),
+                                    drivelineExtensionCableRef: Patient.Add.Fields.DrivelineExtensionCableRef.val(),
+                                    shoulderBagRef:             Patient.Add.Fields.ShoulderBagRef.val(),
+                                    showerBagRef:               Patient.Add.Fields.ShowerBagRef.val(),
+                                    batteryChargerRef:          Patient.Add.Fields.BatteryChargerRef.val(),
+                                    batteryChargerACAdapterRef: Patient.Add.Fields.BatteryChargerACAdapterRef.val(),
+                                    dCAdaptorRefRef:               Patient.Add.Fields.DCAdaptorRef.val(),
+                                    mainControllerRef:          Patient.Add.Fields.MainControllerRef.val(),
+                                    backUpControllerRef:        Patient.Add.Fields.BackUpControllerRef.val(),
+                                    mainRef:                    Patient.Add.Fields.MainRef.val(),
+                                    backUpRef:                  Patient.Add.Fields.BackUpRef.val(),
+                                    batterySerial1Ref:          Patient.Add.Fields.BatterySerial1Ref.val(),
+                                    batterySerial2Ref:          Patient.Add.Fields.BatterySerial2Ref.val(),
+                                    batterySerial3Ref:          Patient.Add.Fields.BatterySerial3Ref.val(),
+                                    batterySerial4Ref:          Patient.Add.Fields.BatterySerial4Ref.val(),
+                                    batterySerial5Ref:          Patient.Add.Fields.BatterySerial5Ref.val(),
+                                    batterySerial6Ref:          Patient.Add.Fields.BatterySerial6Ref.val(),
+                                    batterySerial7Ref:          Patient.Add.Fields.BatterySerial7Ref.val(),
+                                    batterySerial8Ref:          Patient.Add.Fields.BatterySerial8Ref.val(),
+                                    monitorRef:                 Patient.Add.Fields.MonitorRef.val(),
+                                    monitorACAdapterRef:        Patient.Add.Fields.MonitorACAdapterRef.val()
+
+
+
                                 }
                             };
                         },
@@ -207,8 +709,15 @@
                                                 location.reload();
                                             },2000);
                                             $('.alert-success').slideDown();
+                                            $('html, body').animate({
+                                                scrollTop: $("body").offset().top
+                                            }, 1000);
+
                                         }else {
                                             $('.alert-danger').slideDown();
+                                            $('html, body').animate({
+                                                scrollTop: $("body").offset().top
+                                            }, 1000);
                                         }
                                     })
 
@@ -224,9 +733,25 @@
                 $(document).ready(function () {
                     $('#device-add input[name ="on_device"]').change(function() {
                         if(this.checked) {
-                          ischecked = 1;
+                          ischeckedOnDevice = 1;
                         }else {
-                            ischecked = 0;
+                            ischeckedOnDevice = 0;
+                        }
+                    });
+
+                    $('#device-add input[name ="tx"]').change(function() {
+                        if(this.checked) {
+                            ischeckedTx = 1;
+                        }else {
+                            ischeckedTx = 0;
+                        }
+                    });
+
+                    $('#device-add input[name ="ex"]').change(function() {
+                        if(this.checked) {
+                            ischeckedEx = 1;
+                        }else {
+                            ischeckedEx = 0;
                         }
                     });
                     $('#btn-phone').click(function () {
@@ -252,13 +777,30 @@
                         mm='0'+mm;
                     }
                     var today = yyyy+'-'+mm+'-'+dd;
+                    $(function () {
+                        $('#datetimepicker1').datetimepicker({
+                            format: 'YYYY-MM-DD'
+                        });
 
+                    });
+                    $(function () {
+                        $('#datetimepicker2').datetimepicker({
+                            format: 'YYYY-MM-DD'
+                        });
+                    });
                     Patient.Add.Fields.ImplantDate.val(today);
                     Patient.Add.Fields.StatusDate.val(today);
 
-                    $("#statusDate").change(function(){
+                    $('#datetimepicker1').on('dp.change', function(e){
                         var diff = daydiff(parseDate($('#statusDate').val()), parseDate($('#operationDate').val()));
-                        $("#stayedOnDevice").val(diff);
+                        $("#stayedOnDevice").val((diff*1) + 1);
+
+                    })
+
+                    $('#datetimepicker2').on('dp.change', function(e){
+                        var diff = daydiff(parseDate($('#statusDate').val()), parseDate($('#operationDate').val()));
+                        $("#stayedOnDevice").val((diff*1) + 1);
+
                     })
                     function parseDate(str) {
                         var mdy = str.split('-');
@@ -268,7 +810,11 @@
                     function daydiff(first, second) {
                         return Math.round((first-second)/(1000*60*60*24));
                     }
-
+                    $.validate({
+                        validateOnBlur : false,
+                        errorMessagePosition : 'top',
+                        scrollToTopOnError : false
+                    });
                     Patient.Bind();
                 })
 

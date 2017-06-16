@@ -18,6 +18,14 @@ class Patient
     public $FirstnameOfPat;
     public $AdressOfPat;
 
+    public $PatientAge;
+    public $PatientWeight;
+    public $PatientGender;
+    public $PatientHistory;
+    public $PatientBsa;
+
+
+
     public $PhoneNumbers;
 
 
@@ -30,6 +38,12 @@ class Patient
         $this->TCKimlikNo = $data['tckimlikNo'];
         $this->FirstnameOfPat = $data['firstname_pat'];
         $this->AdressOfPat = $data['adress_pat'];
+
+        $this->PatientAge = $data['patientAge'];
+        $this->PatientWeight = $data['patientWeight'];
+        $this->PatientGender = $data['patientGender'];
+        $this->PatientHistory = $data['patientHistory'];
+        $this->PatientBsa = $data['patientBsa'];
 
 
         $this->PhoneNumbers = array();

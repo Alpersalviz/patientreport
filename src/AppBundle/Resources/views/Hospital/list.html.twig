@@ -31,8 +31,8 @@
                                     <form id="custom-search-form" class="form-search form-horizontal pull-right">
                                         <div class="form-group input-group" id="custom-search-form">
                                             {% if hospital.SearchKey is not null and hospital.SearchKey is not empty %}
-                                            <button style="float: left; margin-right: 10px" type="button close"  aria-label="Close" class="btn btn-default">{{ hospital.SearchKey }} <i
-                                                        class="fa fa-remove"></i></button>
+                                                <button style="float: left; margin-right: 10px" type="button close"  aria-label="Close" class="btn btn-default">{{ hospital.SearchKey }} <i
+                                                            class="fa fa-remove"></i></button>
                                             {% endif %}
                                             <input type="text" class="form-control search-inp" placeholder="Search">
                                             <span class="input-group-btn">
@@ -69,13 +69,13 @@
                                     </thead>
                                     <tbody>
                                     {% for hospital  in hospital.Content %}
-                                    <tr class="gradeA odd" role="row">
-                                        <td class="sorting_1">{{ hospital.ID }}</td>
-                                        <td>{{ hospital.NameOfHosp }}</td>
-                                        <td>{{ hospital.City }}</td>
+                                        <tr class="gradeA odd" role="row">
+                                            <td class="sorting_1">{{ hospital.ID }}</td>
+                                            <td>{{ hospital.NameOfHosp }}</td>
+                                            <td>{{ hospital.City }}</td>
 
 
-                                    </tr>
+                                        </tr>
                                     {% endfor %}
                                     </tbody>
                                 </table>
@@ -91,13 +91,13 @@
                                 <div class="dataTables_paginate paging_simple_numbers" id="dataTables-example_paginate">
                                     <ul class="pagination">
                                         {% for i in 1..(hospital.ListSize / hospital.Limit)|round(0, 'ceil') %}
-                                            <li data-id="{{ i }}" class="paginate_button" aria-controls="dataTables-example"
-                                                tabindex="0">
-                                                {% if hospital.SearchKey is not null %}
-                                                    <a href="{{ url("hospital_list",{ 'page' :i-1 , 'limit':hospital.Limit , 'searchKey':hospital.SearchKey }) }}">{{ i }} </a></li>
-                                                {% else %}
-                                                    <a href="{{ url("hospital_list",{ 'page' :i-1 , 'limit':hospital.Limit }) }}">{{ i }} </a></li>
-                                                {% endif %}
+                                        <li data-id="{{ i }}" class="paginate_button" aria-controls="dataTables-example"
+                                            tabindex="0">
+                                            {% if hospital.SearchKey is not null %}
+                                                <a href="{{ url("hospital_list",{ 'page' :i-1 , 'limit':hospital.Limit , 'searchKey':hospital.SearchKey }) }}">{{ i }} </a></li>
+                                            {% else %}
+                                                <a href="{{ url("hospital_list",{ 'page' :i-1 , 'limit':hospital.Limit }) }}">{{ i }} </a></li>
+                                            {% endif %}
 
 
                                         {% endfor %}
@@ -119,22 +119,22 @@
     </div>
 {% endblock %}
 {% block javascripts %}
-<script>
-    function getParameterByName(name, url) {
-        if (!url) {
-            url = window.location.href;
-        }
-        name = name.replace(/[\[\]]/g, "\\$&");
-        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+    <script>
+        function getParameterByName(name, url) {
+            if (!url) {
+                url = window.location.href;
+            }
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
                 results = regex.exec(url);
-        if (!results) return null;
-        if (!results[2]) return '';
-        return decodeURIComponent(results[2].replace(/\+/g, " "));
-    }
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
 
 
-    var page = getParameterByName('page');
-    var limit = getParameterByName('limit');
+        var page = getParameterByName('page');
+        var limit = getParameterByName('limit');
 
         $(document).ready(function () {
             var searchKey = $("#searchkey").val();
@@ -171,5 +171,5 @@
         });
 
 
-</script>
+    </script>
 {% endblock %}

@@ -38,9 +38,15 @@ class PatientController extends BaseController
      */
     public function indexAction(Request $request)
     {
-        //($patient = $this->_patientRepo->GetAllHospital();
-        // replace this example code with whatever you need
-        return array();
+        $limit = intval($request->get('limit',20));
+        $page = intval($request->get('page',0));
+
+        $searchKey = $request->get('searchKey',null);
+
+        $implant = $this->_patientRepo->GetImplant($page*$limit,$limit,$searchKey);
+        return array(
+            'implant' => $implant
+        );
     }
 
     /**
@@ -62,7 +68,11 @@ class PatientController extends BaseController
     {
         $device = $request->request->get('device');
         $patient = $request->request->get('patient');
+       // var_dump($device);exit;
         $deviceOfPat = (new Implant())->MapFrom($device);
+
+
+
 
         $patientObj = (new Patient())->MapFrom($patient);
         $add = $this->_patientRepo->AddImplant($deviceOfPat,$patientObj);
@@ -71,14 +81,38 @@ class PatientController extends BaseController
             'success' => $add
         ));
     }
+
     /**
-     * @Route("/patient/edit", name="patient_edit")
+     * @Route("/patient/edit/{id}", name="patient_edit")
      * @Template("AppBundle:Patient:edit.html.twig")
      */
-    public function patientEditAction(Request $request)
+    public function patientEditAction($id)
     {
+        $implant = $this->_patientRepo->GetImplantByPatientId($id);
+        $implantCenter = $this->_hospitalRepo->GetAllHospital();
 
-        return array();
+        return array(
+            'implant' => $implant,
+            'implantCenter' => $implantCenter
+        );
     }
+    /**
+     * @Route("ajax/patient/update", name="ajax_patient_update")
+     */
+    public function AjaxPatientUpdateAction(Request $request)
+    {
+        $device = $request->request->get('device');
+        $patient = $request->request->get('patient');
 
+
+        $deviceOfPat = (new Implant())->MapFrom($device);
+        $patientObj = (new Patient())->MapFrom($patient);
+//        var_dump($deviceOfPat->OutflowGraft);exit;
+
+        $add = $this->_patientRepo->UpdateImplant($deviceOfPat,$patientObj);
+
+        return new JsonResponse(array(
+            'success' => $add
+        ));
+    }
 }

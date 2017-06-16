@@ -35,10 +35,12 @@ class DefaultController extends BaseController
     public function indexAction(Request $request)
     {
 
-        //$patients = $this->_patientRepo->GetAllPatient();
+        $implantCount = $this->_patientRepo->GetImplantCount();
  
         // replace this example code with whatever you need
-        return array();
+        return array(
+            'implantCount'=> $implantCount
+        );
     }
  
     /**
