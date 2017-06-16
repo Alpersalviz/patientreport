@@ -164,7 +164,6 @@ label.form-invalid:after {
 [type="radio"]:not(:checked),
 [type="radio"]:checked {
     position: absolute;
-    left: -9999px;
 }
 [type="checkbox"]:not(:checked) + label,
 [type="checkbox"]:checked + label,
