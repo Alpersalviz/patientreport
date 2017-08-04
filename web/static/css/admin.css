@@ -274,3 +274,8 @@ label:hover:before {
 .container-fluid{
     min-height: 100vh;
 }
+
+div.dataTables_wrapper div.dataTables_length select{
+    width: 100% !important;
+    min-width: 100px;
+}

@@ -33,19 +33,21 @@ class PatientController extends BaseController
 
     }
     /**
-     * @Route("/patient/list", name="patient_list")
+     * @Route("/patient/list/{month}", name="patient_list")
      * @Template("AppBundle:Patient:list.html.twig")
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request,$month)
     {
-        $limit = intval($request->get('limit',20));
+        $limit = intval($request->get('limit',10));
         $page = intval($request->get('page',0));
 
         $searchKey = $request->get('searchKey',null);
-
-        $implant = $this->_patientRepo->GetImplant($page*$limit,$limit,$searchKey);
+        $hospitalId = $request->get('hospitalId',null);
+        $implant = $this->_patientRepo->GetImplant($page*$limit,$limit,$searchKey,$hospitalId,$month);
+        $hospitals = $this->_hospitalRepo->GetAllHospital();
         return array(
-            'implant' => $implant
+            'implant' => $implant,
+            'hospitals' => $hospitals
         );
     }
 

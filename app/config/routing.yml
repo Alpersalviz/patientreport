@@ -1,3 +1,9 @@
+api:
+    resource: "@ApiBundle/Controller/"
+    prefix:   /api
+    type:     annotation
+
 app:
     resource: "@AppBundle/Controller/"
+    prefix:   /
     type:     annotation

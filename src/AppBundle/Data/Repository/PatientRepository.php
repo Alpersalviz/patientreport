@@ -459,17 +459,34 @@ class PatientRepository extends BaseRepository
         return false;
     }
 
-    public function GetImplant($offset = 0, $limit = 5, $searchKey = null)
+    public function GetImplant($offset = 0, $limit = 5, $searchKey = null, $hospitalId = null)
     {
         try {
             $countQuery='SELECT COUNT(*) as row_count 
                 FROM implant i 
                 INNER JOIN patient p ON p.patientID = i.patientID 
                 INNER JOIN hospital h ON h.ID = i.hospitalID';
-            if($searchKey !== null)
+
+            if($searchKey !== null && $searchKey !== 'search' || $hospitalId !== null && $hospitalId !== 'null'){
+                $countQuery .=' WHERE ';
+            }
+
+
+            if($searchKey !== null && $searchKey !== 'search')
             {
-                $countQuery .=' WHERE p.firstname_pat
+                $countQuery .='p.firstname_pat
                         LIKE "%'.$searchKey.'%" OR h.name_hosp LIKE "%'.$searchKey.'%"';
+            }
+
+
+            if($hospitalId !== null && $hospitalId !== 'null'){
+                if($searchKey !== null && $searchKey !== 'search')
+                {
+
+                    $countQuery .= ' AND ';
+                }
+
+                $countQuery .='i.hospitalID = '.$hospitalId;
             }
 
             $countResult = $this->getConnection()->prepare($countQuery);
@@ -482,11 +499,27 @@ class PatientRepository extends BaseRepository
                     FROM implant i 
                     INNER JOIN patient p ON p.patientID = i.patientID 
                     INNER JOIN hospital h ON h.ID = i.hospitalID";
-            if($searchKey !== null){
-                $query .=' WHERE p.firstname_pat
+
+            if($searchKey !== null && $searchKey !== 'search' || $hospitalId !== null && $hospitalId !== 'null'){
+                $query .=' WHERE ';
+            }
+
+            if($searchKey !== null && $searchKey !== 'search'){
+                $query .='p.firstname_pat
                         LIKE "%'.$searchKey.'%" OR h.name_hosp LIKE "%'.$searchKey.'%"';
             }
-           // $query .=' LIMIT '.$offset.','.$limit;
+
+
+            if($hospitalId !== null  && $hospitalId !== 'null'){
+
+                if($searchKey !== null && $searchKey !== 'search')
+                {
+
+                    $query .= ' AND ';
+                }
+                $query .='i.hospitalID = '.$hospitalId;
+            }
+            $query .=' LIMIT '.$offset.','.$limit;
 
             $result = $this->getConnection()->prepare($query);
             $result->execute();
@@ -510,7 +543,7 @@ class PatientRepository extends BaseRepository
 
                 $implant[] = (new Implant())->MapFrom($result);
             }
-            $list = new PagedList($implant,(int)$countResult['row_count'],$limit,$searchKey);
+            $list = new PagedList($implant,(int)$countResult['row_count'],$limit,$searchKey,$hospitalId);
 
             return $list;
 
