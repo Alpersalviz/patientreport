@@ -1,7 +1,6 @@
-
-.search-inp
-{ width: 153px !important; }
-
+.custom-row div{
+    margin: 0 0 8px 0;
+}
 #custom-search-form
 {
     margin-bottom: 15px;

@@ -10,7 +10,7 @@
     <meta name="author" content="">
 
     <title>Mas Admin</title>
-    {% set version = '?v=0.0.1' %}
+    {% set version = '?v=0.0.2' %}
 
     <!-- Bootstrap Core CSS -->
     <link href="{{ asset('static/css/bootstrap.min.css') }}{{ version }}" rel="stylesheet">
@@ -103,7 +103,7 @@
                         </li>
 
                         <li>
-                            <a href="{{ url('patient_list',{"month" : 1}) }}">List Patient</a>
+                            <a href="{{ url('patient_list',{"firstmonth" : 0,'lastmonth':0,'year':0}) }}">List Patient</a>
                         </li>
 
                     </ul>

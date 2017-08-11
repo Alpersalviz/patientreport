@@ -16,14 +16,20 @@ class PagedList
     public $Limit;
     public $SearchKey;
     public $HospitalId;
+    public $FirstMonth;
+    public $LastMonth;
+    public $Year;
 
-    public function __construct($content = null, $listSize = null , $limit = null , $searchKey = null, $hospitalId = null)
+    public function __construct($content = null, $listSize = null , $limit = null , $searchKey = null, $hospitalId = null,$firstmonth,$lastmonth,$year)
     {
         $this->Content = $content;
         $this->Limit = $limit;
         $this->ListSize = $listSize;
         $this->SearchKey = $searchKey;
         $this->HospitalId = $hospitalId;
+        $this->FirstMonth = $firstmonth;
+        $this->LastMonth = $lastmonth;
+        $this->Year = $year;
     }
 
 }

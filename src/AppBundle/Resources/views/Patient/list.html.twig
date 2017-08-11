@@ -1,6 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
+    <input type="hidden" class="firstmonth" value="{{ implant.FirstMonth }}">
+    <input type="hidden" class="lastmonth" value="{{ implant.LastMonth }}">
+    <input type="hidden" class="year" value="{{ implant.Year }}">
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
@@ -16,10 +19,10 @@
                 <!-- /.panel-heading -->
                 <div class="panel-body" style="overflow-x: scroll;">
                     <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-                        <div class="row">
-                            <div class="col-sm-1">
+                        <div class="row custom-row">
+                            <div class="col-sm-2">
                                 <div class="dataTables_length" id="dataTables-example_length">
-                                    <label>
+
                                         <select name="dataTables-example_length" id="limit" aria-controls="dataTables-example"
                                                 class="custom-select form-control input-sm">
                                             <option value="10">10</option>
@@ -27,13 +30,12 @@
                                             <option value="30">30</option>
                                             <option value="40">40</option>
                                         </select>
-                                    </label>
+
                                 </div>
                             </div>
-
                             <div class="col-sm-2">
                                 <div class="dataTables_length" id="dataTables-example_length">
-                                    <label>
+
                                         <select name="dataTables-example_length" aria-controls="dataTables-example"
                                                 class="custom-select-hospital form-control input-sm">
                                             <option value="null">Hospital</option>
@@ -42,14 +44,13 @@
                                             <option value="{{ hospital.ID }}"{% if implant.HospitalId == hospital.ID %} selected {% endif %}>{{ hospital.NameOfHosp }}</option>
                                             {% endfor %}
                                         </select>
-                                    </label>
                                 </div>
                             </div>
 
-                            <div class="col-sm-3">
-                                <div class="span12">
+                            <div class="col-sm-2">
+
                                     <form id="custom-search-form" class="form-search form-horizontal pull-right">
-                                        <div class="form-group input-group" id="custom-search-form">
+                                        <div class="input-group" id="custom-search-form">
                                             {% if implant.SearchKey is not null and implant.SearchKey is not empty and implant.SearchKey != "search" %}
                                                 <button style="float: left; margin-right: 10px" type="button close"  aria-label="Close" class="btn btn-default">{{ implant.SearchKey }} <i
                                                             class="fa fa-remove"></i></button>
@@ -62,6 +63,77 @@
                                             </span>
                                         </div>
                                     </form>
+
+                            </div>
+
+
+                            <div class="col-sm-1">
+                                <div class="dataTables_length" id="dataTables-example_length">
+
+                                    <select name="dataTables-example_length" id="firstmonth" aria-controls="dataTables-example"
+                                            class="form-control input-sm">
+                                        <option value="0">First Month</option>
+                                        <option value="01">01</option>
+                                        <option value="02">02</option>
+                                        <option value="03">03</option>
+                                        <option value="04">04</option>
+                                        <option value="05">05</option>
+                                        <option value="06">06</option>
+                                        <option value="07">07</option>
+                                        <option value="08">08</option>
+                                        <option value="09">09</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <div class="dataTables_length" id="dataTables-example_length">
+
+                                    <select name="dataTables-example_length" id="lastmonth" aria-controls="dataTables-example"
+                                            class="form-control input-sm">
+                                        <option value="0">Last Month</option>
+                                        <option value="01">01</option>
+                                        <option value="02">02</option>
+                                        <option value="03">03</option>
+                                        <option value="04">04</option>
+                                        <option value="05">05</option>
+                                        <option value="06">06</option>
+                                        <option value="07">07</option>
+                                        <option value="08">08</option>
+                                        <option value="09">09</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="dataTables_length" id="dataTables-example_length">
+
+                                    <select name="dataTables-example_length" id="year" aria-controls="dataTables-example"
+                                            class="form-control input-sm">
+                                        <option value="0">Year</option>
+                                        <option value="2010">2010</option>
+                                        <option value="2011">2011</option>
+                                        <option value="2012">2012</option>
+                                        <option value="2013">2013</option>
+                                        <option value="2014">2014</option>
+                                        <option value="2015">2015</option>
+                                        <option value="2016">2016</option>
+                                        <option value="2017">2017</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="dataTables_length" id="dataTables-example_length">
+
+                                 <button id="date-filter">Filter</button>
+
                                 </div>
                             </div>
                         </div>
@@ -133,9 +205,9 @@
                                     <li data-id="{{ i }}" class="paginate_button" aria-controls="dataTables-example"
                                         tabindex="0">
                                         {% if implant.SearchKey is not null %}
-                                            <a href="{{ url("patient_list",{'month' :0 , 'page' :i-1 , 'limit':implant.Limit , 'searchKey':implant.SearchKey, 'hospitalId' : implant.HospitalId }) }}">{{ i }} </a></li>
+                                            <a href="{{ url("patient_list",{'firstmonth' : implant.FirstMonth  ,'lastmonth' :implant.LastMonth ,'year' :implant.Year , 'page' :i-1 , 'limit':implant.Limit , 'searchKey':implant.SearchKey, 'hospitalId' : implant.HospitalId }) }}">{{ i }} </a></li>
                                         {% else %}
-                                            <a href="{{ url("patient_list",{'month' : 0 ,'page' :i-1 , 'limit':implant.Limit , 'hospitalId' : implant.HospitalId }) }}">{{ i }} </a></li>
+                                            <a href="{{ url("patient_list",{'firstmonth' : implant.FirstMonth ,'lastmonth' :implant.LastMonth ,'year' :implant.Year ,'page' :i-1 , 'limit':implant.Limit , 'hospitalId' : implant.HospitalId }) }}">{{ i }} </a></li>
                                         {% endif %}
 
 
@@ -177,6 +249,16 @@
         var limit = getParameterByName('limit');
 
         $(document).ready(function () {
+            lastMonthVal = $('.lastmonth').val();
+            firstMonthVal = $('.firstmonth').val();
+            yearVal = $('.year').val();
+
+            $("#firstmonth option[value='"+firstMonthVal+"']" ).prop('selected',true);
+            $("#lastmonth option[value='"+lastMonthVal+"']" ).prop('selected',true);
+            $("#year option[value='"+yearVal+"']" ).prop('selected',true);
+
+
+
             var searchKey = $(".search-inp").val();
             var hospitalId = $('.custom-select-hospital').val();
             var limit = $('#limit').val();
@@ -212,7 +294,12 @@
             $('.searchButton').click(searchEvent);
 
 
-
+            $('#date-filter').on('click', function() {
+                firstMonth =  $("#firstmonth").val();
+                lastMonth =  $("#lastmonth").val();
+                year =  $("#year").val();
+                window.location.href = "/patient/list/"+firstMonth+"/"+lastMonth+"/"+year;
+            })
 
         });
 
