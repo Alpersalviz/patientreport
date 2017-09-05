@@ -19,8 +19,9 @@ class PagedList
     public $FirstMonth;
     public $LastMonth;
     public $Year;
+    public $ImplantType;
 
-    public function __construct($content = null, $listSize = null , $limit = null , $searchKey = null, $hospitalId = null,$firstmonth,$lastmonth,$year)
+    public function __construct($content = null, $listSize = null , $limit = null , $searchKey = null, $hospitalId = null,$firstmonth,$lastmonth,$year,$implant_type)
     {
         $this->Content = $content;
         $this->Limit = $limit;
@@ -30,6 +31,7 @@ class PagedList
         $this->FirstMonth = $firstmonth;
         $this->LastMonth = $lastmonth;
         $this->Year = $year;
+        $this->ImplantType = $implant_type;
     }
 
 }

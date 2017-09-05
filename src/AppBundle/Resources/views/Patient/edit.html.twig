@@ -88,10 +88,22 @@
                                             <div class="form-group">
                                                 <label>Implant Center :</label>
                                                 <input type="hidden" id="hospitalID" value="{{ implant.HospitalID }}">
+                                                <input type="hidden" id="implant_type" value="{{ implant.Implant_Type }}">
                                                 <select  name="implantCenter" id="implantCenter"  class="form-control">
                                                     {% for hospital  in implantCenter %}
                                                         <option value="{{ hospital.ID }}">{{ hospital.NameOfHosp }}</option>
                                                     {% endfor %}
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Implant Type :</label>
+                                                <select  name="implant_type" id="implant_type"  class="form-control">
+
+                                                    <option value="0" {% if implant.Implant_Type == "Bivad" %} selected{% endif %}>Bivad</option>
+                                                    <option value="1" {% if implant.Implant_Type == "Lvad" %} selected{% endif %}>Lvad</option>
+                                                    <option value="2" {% if implant.Implant_Type == "Rvad" %} selected{% endif %}>Rvad</option>
+
                                                 </select>
                                             </div>
                                             <div class="form-group">
@@ -501,6 +513,7 @@
         var ischeckedTx = 0;
         var ischeckedEx = 0;
         var hospitalID = $("#hospitalID").val();
+        var implant_type = $("#implant_type").val();
 
         var phoneNumbers=[];
         var Patient={
@@ -516,6 +529,7 @@
                     DeviceOfPatID:      null,
                     PatientID:          $('#device-add input[name ="patientId"]'),
                     HospitalID:         $('#device-add select[name ="implantCenter"]'),
+                    Implant_Type:       $('#device-add select[name ="implant_type"]'),
                     ImplantDate:        $('#device-add input[name ="operationDate"]'),
                     StatusDate:         $('#device-add input[name ="statusDate"]'),
                     PatientStatus:      $('#device-add input[name ="statusofPatient"]'),
@@ -614,6 +628,7 @@
                             patientID:          Patient.Add.Fields.PatientID.val(),
                             HVADPumpID:          Patient.Add.Fields.HVADPumpID.val(),
                             hospitalID:         Patient.Add.Fields.HospitalID.val(),
+                            implant_type:           Patient.Add.Fields.Implant_Type.val(),
                             implant_date:        Patient.Add.Fields.ImplantDate.val(),
                             status_date:         Patient.Add.Fields.StatusDate.val(),
                             patient_status:      Patient.Add.Fields.PatientStatus.val(),
@@ -734,6 +749,7 @@
         $(document).ready(function () {
 
             $('#implantCenter option[value="'+hospitalID+'"]').prop('selected', true);
+            $('#implant_type option[value="'+implant_type+'"]').prop('selected', true);
 
             $('#device-add input[name ="on_device"]').change(function() {
                 if(this.checked) {

@@ -36,7 +36,6 @@
                                         <textarea class="form-control" id="textarea-size"  name="adress"  placeholder="Add a address" rows="3"></textarea>
                                     </div>
 
-
                                     <div class="form-group" id="phone">
                                         <label>Phone :</label>
 
@@ -46,7 +45,6 @@
                                     </div>
                             </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-
 
                                     <div class="form-group">
                                         <label>Patient Age :</label>
@@ -58,24 +56,20 @@
                                         <input type="text" name="patientWeight" id="patientWeight" tabindex="1" class="form-control">
                                     </div>
 
-
                                     <div class="form-group">
                                         <label>Patient Gender :</label>
                                         <input type="text" name="patientGender" id="patientGender" tabindex="1" class="form-control">
                                     </div>
-
 
                                     <div class="form-group">
                                         <label>Patient History :</label>
                                         <input type="text" name="patientHistory" id="patientHistory" tabindex="1" class="form-control">
                                     </div>
 
-
                                     <div class="form-group">
                                         <label>Patient Bsa :</label>
                                         <input type="text" name="patientBsa" id="patientBsa" tabindex="1" class="form-control">
                                     </div>
-
 
                                 </div>
 
@@ -91,6 +85,17 @@
                                         {% endfor %}
                                     </select>
                                 </div>
+
+                                        <div class="form-group">
+                                            <label>Implant Type :</label>
+                                            <select  name="implant_type" id="implant_type"  class="form-control">
+
+                                                    <option value="0">Bivad</option>
+                                                    <option value="1">Lvad</option>
+                                                    <option value="2">Rvad</option>
+
+                                            </select>
+                                        </div>
                                 <div class="form-group">
                                     <label>Operation Date :</label>
 
@@ -154,7 +159,6 @@
 
                                 </div>
 
-
                                     <div class="col-lg-12 implant-form-ex">
                                         <h4><a href="#implantForm" data-toggle="collapse">Implant Form</a></h4>
 
@@ -217,14 +221,8 @@
                                             <input type="text" name="proctorName" id="proctorName" tabindex="1" class="form-control">
                                         </div>
 
-
-
                                         </div>
                                     </div>
-
-
-
-
 
                                     <div class="col-lg-12 setDetail-form-ex">
                                         <h4><a href="#detailForm" data-toggle="collapse">Set Detail</a></h4>
@@ -347,8 +345,6 @@
                                                     <input type="text" name="monitorACAdapter" id="monitorACAdapter" tabindex="1" class="form-control">
                                                 </div>
 
-
-
                                             </div>
 
                                             <div class="col-lg-6">
@@ -468,12 +464,9 @@
                                                     <input type="text" name="monitorACAdapterRef" id="monitorACAdapterRef" tabindex="1" class="form-control">
                                                 </div>
 
-
-
                                             </div>
                                         </div>
                                     </div>
-
                                 <button type="submit" class="btn btn-primary">Save</button>
                             </form>
                         </div>
@@ -511,6 +504,7 @@
                             DeviceOfPatID:      null,
                             PatientID:          $('#device-add input[name ="patientId"]'),
                             HospitalID:         $('#device-add select[name ="implantCenter"]'),
+                            Implant_Type:       $('#device-add select[name ="implant_type"]'),
                             ImplantDate:        $('#device-add input[name ="operationDate"]'),
                             StatusDate:         $('#device-add input[name ="statusDate"]'),
                             PatientStatus:      $('#device-add input[name ="statusofPatient"]'),
@@ -611,6 +605,7 @@
                                     patientID:              Patient.Add.Fields.PatientID.val(),
                                     HVADPumpID:             Patient.Add.Fields.HVADPumpID.val(),
                                     hospitalID:             Patient.Add.Fields.HospitalID.val(),
+                                    implant_type:           Patient.Add.Fields.Implant_Type.val(),
                                     implant_date:           Patient.Add.Fields.ImplantDate.val(),
                                     status_date:            Patient.Add.Fields.StatusDate.val(),
                                     patient_status:         Patient.Add.Fields.PatientStatus.val(),
@@ -680,8 +675,6 @@
                                     batterySerial8Ref:          Patient.Add.Fields.BatterySerial8Ref.val(),
                                     monitorRef:                 Patient.Add.Fields.MonitorRef.val(),
                                     monitorACAdapterRef:        Patient.Add.Fields.MonitorACAdapterRef.val()
-
-
 
                                 }
                             };

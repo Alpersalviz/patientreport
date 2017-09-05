@@ -153,8 +153,8 @@ class PatientRepository extends BaseRepository
                 return false;
 
             $query = "INSERT INTO implant
-                      (patientID, HVADPumpID, hospitalID, implant_date, status_date, patient_status, descr_dev_of_pat, stay_duration_of_dev,qty,on_device,ex,tx,surgicalImplant,implantType, surgeon, intermacsLevel, etiology, lavareCycle, cpbTime, pumpSpeed, pumpWatts, pumpFlow, pumpFlowSettling, referringClinician ,proctorName,outflowGraft, sterileSurgicalTools , drivelineExtensionCable , shoulderBag , showerBag,  batteryCharger ,batteryChargerACAdapter , dCAdaptor, mainController, backUpController ,main, backUp, batterySerial1, batterySerial2 ,batterySerial3 ,batterySerial4 ,batterySerial5 , batterySerial6 ,batterySerial7 ,batterySerial8 ,monitor ,monitorACAdapter ,outflowGraftRef, sterileSurgicalToolsRef , drivelineExtensionCableRef , shoulderBagRef , showerBagRef ,  batteryChargerRef ,batteryChargerACAdapterRef , dCAdaptorRef , mainControllerRef , backUpControllerRef , mainRef, backUpRef , batterySerial1Ref , batterySerial2Ref ,batterySerial3Ref ,batterySerial4Ref ,batterySerial5Ref , batterySerial6Ref ,batterySerial7Ref ,batterySerial8Ref ,monitorRef ,monitorACAdapterRef) VALUES 
-                      (:patientID,:HVADPumpID,:hospitalID,:implant_date,:status_date,:patient_status,:descr_dev_of_pat,:stay_duration_of_dev,:qty,:on_device,:ex,:tx,:surgicalImplant, :implantType, :surgeon, :intermacsLevel, :etiology, :lavareCycle, :cpbTime, :pumpSpeed, :pumpWatts, :pumpFlow, :pumpFlowSettling, :referringClinician, :proctorName,:outflowGraft, :sterileSurgicalTools , :drivelineExtensionCable , :shoulderBag , :showerBag,  :batteryCharger ,:batteryChargerACAdapter , :dCAdaptor, :mainController, :backUpController , :main, :backUp, :batterySerial1, :batterySerial2 , :batterySerial3 , :batterySerial4 , :batterySerial5 , :batterySerial6 ,:batterySerial7 ,:batterySerial8 ,:monitor ,:monitorACAdapter , :outflowGraftRef, :sterileSurgicalToolsRef , :drivelineExtensionCableRef , :shoulderBagRef , :showerBagRef ,  :batteryChargerRef , :batteryChargerACAdapterRef , :dCAdaptorRef , :mainControllerRef , :backUpControllerRef , :mainRef, :backUpRef , :batterySerial1Ref , :batterySerial2Ref , :batterySerial3Ref , :batterySerial4Ref , :batterySerial5Ref , :batterySerial6Ref , :batterySerial7Ref , :batterySerial8Ref , :monitorRef , :monitorACAdapterRef)";
+                      (patientID, HVADPumpID, hospitalID, implant_date, status_date, patient_status, descr_dev_of_pat, stay_duration_of_dev,qty,on_device,ex,tx,surgicalImplant,implantType,implant_type, surgeon, intermacsLevel, etiology, lavareCycle, cpbTime, pumpSpeed, pumpWatts, pumpFlow, pumpFlowSettling, referringClinician ,proctorName,outflowGraft, sterileSurgicalTools , drivelineExtensionCable , shoulderBag , showerBag,  batteryCharger ,batteryChargerACAdapter , dCAdaptor, mainController, backUpController ,main, backUp, batterySerial1, batterySerial2 ,batterySerial3 ,batterySerial4 ,batterySerial5 , batterySerial6 ,batterySerial7 ,batterySerial8 ,monitor ,monitorACAdapter ,outflowGraftRef, sterileSurgicalToolsRef , drivelineExtensionCableRef , shoulderBagRef , showerBagRef ,  batteryChargerRef ,batteryChargerACAdapterRef , dCAdaptorRef , mainControllerRef , backUpControllerRef , mainRef, backUpRef , batterySerial1Ref , batterySerial2Ref ,batterySerial3Ref ,batterySerial4Ref ,batterySerial5Ref , batterySerial6Ref ,batterySerial7Ref ,batterySerial8Ref ,monitorRef ,monitorACAdapterRef) VALUES 
+                      (:patientID,:HVADPumpID,:hospitalID,:implant_date,:status_date,:patient_status,:descr_dev_of_pat,:stay_duration_of_dev,:qty,:on_device,:ex,:tx,:surgicalImplant, :implantType,:implant_type, :surgeon, :intermacsLevel, :etiology, :lavareCycle, :cpbTime, :pumpSpeed, :pumpWatts, :pumpFlow, :pumpFlowSettling, :referringClinician, :proctorName,:outflowGraft, :sterileSurgicalTools , :drivelineExtensionCable , :shoulderBag , :showerBag,  :batteryCharger ,:batteryChargerACAdapter , :dCAdaptor, :mainController, :backUpController , :main, :backUp, :batterySerial1, :batterySerial2 , :batterySerial3 , :batterySerial4 , :batterySerial5 , :batterySerial6 ,:batterySerial7 ,:batterySerial8 ,:monitor ,:monitorACAdapter , :outflowGraftRef, :sterileSurgicalToolsRef , :drivelineExtensionCableRef , :shoulderBagRef , :showerBagRef ,  :batteryChargerRef , :batteryChargerACAdapterRef , :dCAdaptorRef , :mainControllerRef , :backUpControllerRef , :mainRef, :backUpRef , :batterySerial1Ref , :batterySerial2Ref , :batterySerial3Ref , :batterySerial4Ref , :batterySerial5Ref , :batterySerial6Ref , :batterySerial7Ref , :batterySerial8Ref , :monitorRef , :monitorACAdapterRef)";
 
             $result = $this->getConnection()->prepare($query);
             $result->execute(array(
@@ -172,6 +172,7 @@ class PatientRepository extends BaseRepository
                 ':tx'                   => (int)$device->Tx,
                 ':surgicalImplant'      => $device->SurgicalImplant,
                 ':implantType'          => $device->ImplantType,
+                ':implant_type'         => $device->Implant_Type,
                 ':surgeon'              => $device->Surgeon,
                 ':intermacsLevel'       => $device->IntermacsLevel,
                 ':etiology'             => $device->Etiology,
@@ -459,7 +460,7 @@ class PatientRepository extends BaseRepository
         return false;
     }
 
-    public function GetImplant($offset = 0, $limit = 5, $searchKey = null, $hospitalId = null,$firstmonth,$secondmonth,$year)
+    public function GetImplant($offset = 0, $limit = 5, $searchKey = null, $hospitalId = null,$firstmonth,$secondmonth,$year,$implant_type = null)
     {
 
 
@@ -471,7 +472,7 @@ class PatientRepository extends BaseRepository
 
 
             if($firstmonth == "0"){
-                if($searchKey !== null && $searchKey !== 'search' || $hospitalId !== null && $hospitalId !== 'null'){
+                if($searchKey !== null && $searchKey !== 'search' || $hospitalId !== null && $hospitalId !== 'null' || $implant_type !== null &&  $implant_type !== 'null'){
                     $countQuery .=' WHERE ';
                 }
 
@@ -483,7 +484,7 @@ class PatientRepository extends BaseRepository
                     }
 
 
-                if($hospitalId !== null && $hospitalId !== 'null'){
+                if($hospitalId !== null && $hospitalId !== 'null' ){
                     if($searchKey !== null && $searchKey !== 'search')
                     {
 
@@ -492,19 +493,39 @@ class PatientRepository extends BaseRepository
 
                     $countQuery .='i.hospitalID = '.$hospitalId;
                 }
+
+
+
+
+
+                if($implant_type !== null && $implant_type !== 'null' ){
+                    if($hospitalId !== null && $hospitalId !== 'null')
+                    {
+
+                        $countQuery .= ' AND ';
+                    }
+
+                    $countQuery .='i.implant_type = '.$implant_type;
+                }
             }else{
                 $countQuery .= " WHERE (implant_date BETWEEN '".$year."-".$firstmonth."-01' AND '".$year."-".$secondmonth."-31')";
                 if ($hospitalId !== null && $hospitalId !== 'null') {
 
                     $countQuery .= 'AND i.hospitalID = ' . $hospitalId;
                 }
+
+                if ($implant_type !== null && $implant_type !== 'null') {
+
+                    $countQuery .= 'AND i.implant_type = '.$implant_type;
+                }
             }
 
             $countResult = $this->getConnection()->prepare($countQuery);
             $countResult->execute();
             $countResult = $countResult->fetch();
+
             if($countResult === null || (int)$countResult['row_count'] == 0)
-                return new PagedList(null,0,$limit,$searchKey);
+                return new PagedList(null,0,$limit,$searchKey,$hospitalId,$firstmonth,$secondmonth,$year,$implant_type);
 
             $query = "SELECT i.*,p.*,h.name_hosp
                     FROM implant i 
@@ -531,11 +552,25 @@ class PatientRepository extends BaseRepository
                     }
                     $query .= 'i.hospitalID = ' . $hospitalId;
                 }
+
+                if($implant_type !== null && $implant_type !== 'null' ){
+                    if($hospitalId !== null)
+                    {
+
+                        $query .= ' AND ';
+                    }
+
+                    $query .=' i.implant_type = '.$implant_type;
+                }
             }else{
                 $query .= " WHERE (implant_date BETWEEN '".$year."-".$firstmonth."-01' AND '".$year."-".$secondmonth."-31')";
                 if ($hospitalId !== null && $hospitalId !== 'null') {
 
                     $query .= 'AND i.hospitalID = ' . $hospitalId;
+                }
+                if ($implant_type !== null && $implant_type !== 'null') {
+
+                    $query .= 'AND i.implant_type = '.$implant_type;
                 }
 
             }
@@ -548,7 +583,7 @@ class PatientRepository extends BaseRepository
             $results = $result->fetchAll();
 
             if($results == false)
-                return new PagedList(null, 0,$limit,$searchKey);
+                return new PagedList(null, 0,$limit,$searchKey,$hospitalId,$firstmonth,$secondmonth,$year,$implant_type);
 
             $phoneQuery="SELECT pnp.* 
                         FROM phone_no_pat pnp
@@ -565,7 +600,7 @@ class PatientRepository extends BaseRepository
 
                 $implant[] = (new Implant())->MapFrom($result);
             }
-            $list = new PagedList($implant,(int)$countResult['row_count'],$limit,$searchKey,$hospitalId,$firstmonth,$secondmonth,$year);
+            $list = new PagedList($implant,(int)$countResult['row_count'],$limit,$searchKey,$hospitalId,$firstmonth,$secondmonth,$year,$implant_type);
 
             return $list;
 

@@ -36,9 +36,10 @@ class HospitalController extends BaseController
         $page = intval($request->get('page',0));
 
         $searchKey = $request->get('searchKey',null);
+
+
        
         $hospital = $this->_hospitalRepo->GetHospital($page*$limit,$limit,$searchKey);
-
         return array(
             'hospital' => $hospital
         );

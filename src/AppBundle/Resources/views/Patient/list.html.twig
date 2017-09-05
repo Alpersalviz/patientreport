@@ -4,6 +4,43 @@
     <input type="hidden" class="firstmonth" value="{{ implant.FirstMonth }}">
     <input type="hidden" class="lastmonth" value="{{ implant.LastMonth }}">
     <input type="hidden" class="year" value="{{ implant.Year }}">
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="dataTables_length" id="dataTables-example_length">
+
+                <select name="dataTables-example_length" id="limit" aria-controls="dataTables-example"
+                        class="custom-select form-control input-sm">
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                </select>
+
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+
+            <form id="custom-search-form" class="form-search form-horizontal pull-right">
+                <div class="input-group" id="custom-search-form">
+                    {% if implant.SearchKey is not null and implant.SearchKey is not empty and implant.SearchKey != "search" %}
+                        <button style="float: left; margin-right: 10px" type="button close"  aria-label="Close" class="btn btn-default">{{ implant.SearchKey }} <i
+                                    class="fa fa-remove"></i></button>
+                    {% endif %}
+                    <input type="text" class="form-control search-inp" value="search" placeholder="Search">
+                    <span class="input-group-btn">
+                                                <button class="btn searchButton btn-default" type="button"><i
+                                                            class="fa fa-search"></i>
+                                                </button>
+                                            </span>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
@@ -20,19 +57,7 @@
                 <div class="panel-body" style="overflow-x: scroll;">
                     <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
                         <div class="row custom-row">
-                            <div class="col-sm-2">
-                                <div class="dataTables_length" id="dataTables-example_length">
 
-                                        <select name="dataTables-example_length" id="limit" aria-controls="dataTables-example"
-                                                class="custom-select form-control input-sm">
-                                            <option value="10">10</option>
-                                            <option value="20">20</option>
-                                            <option value="30">30</option>
-                                            <option value="40">40</option>
-                                        </select>
-
-                                </div>
-                            </div>
                             <div class="col-sm-2">
                                 <div class="dataTables_length" id="dataTables-example_length">
 
@@ -48,26 +73,20 @@
                             </div>
 
                             <div class="col-sm-2">
+                             <div class="dataTables_length" id="dataTables-example_length">
+                                        <select  name="implant_type" id="implant_type"  class="form-control">
+                                            <option value="null">Implant Type</option>
 
-                                    <form id="custom-search-form" class="form-search form-horizontal pull-right">
-                                        <div class="input-group" id="custom-search-form">
-                                            {% if implant.SearchKey is not null and implant.SearchKey is not empty and implant.SearchKey != "search" %}
-                                                <button style="float: left; margin-right: 10px" type="button close"  aria-label="Close" class="btn btn-default">{{ implant.SearchKey }} <i
-                                                            class="fa fa-remove"></i></button>
-                                            {% endif %}
-                                            <input type="text" class="form-control search-inp" value="search" placeholder="Search">
-                                            <span class="input-group-btn">
-                                                <button class="btn searchButton btn-default" type="button"><i
-                                                            class="fa fa-search"></i>
-                                                </button>
-                                            </span>
-                                        </div>
-                                    </form>
+                                            <option value="0" {% if implant.ImplantType == "0" %} selected{% endif %}>Bivad</option>
+                                            <option value="1" {% if implant.ImplantType == "1" %} selected{% endif %}>Lvad</option>
+                                            <option value="2" {% if implant.ImplantType == "2" %} selected{% endif %}>Rvad</option>
 
+                                        </select>
+                             </div>
                             </div>
 
 
-                            <div class="col-sm-1">
+                            <div class="col-sm-2">
                                 <div class="dataTables_length" id="dataTables-example_length">
 
                                     <select name="dataTables-example_length" id="firstmonth" aria-controls="dataTables-example"
@@ -89,7 +108,7 @@
 
                                 </div>
                             </div>
-                            <div class="col-sm-1">
+                            <div class="col-sm-2">
                                 <div class="dataTables_length" id="dataTables-example_length">
 
                                     <select name="dataTables-example_length" id="lastmonth" aria-controls="dataTables-example"
@@ -136,6 +155,9 @@
 
                                 </div>
                             </div>
+
+
+
                         </div>
                         <div class="row">
                             <div class="col-sm-12">
@@ -146,7 +168,7 @@
                                         <th>Implant Number</th>
                                         <th>Implant Date</th>
                                         <th>Implant Center</th>
-                                        <th>City</th>
+                                        <th>Implant Type</th>
                                         <th>Patient ID</th>
                                         <th>Patient Name </th>
                                         <th>HVADPumpID </th>
@@ -167,7 +189,7 @@
                                             <td>{{ implant.ID }}</td>
                                             <td>{{ implant.ImplantDate }}</td>
                                             <td>{{ implant.HospitalCenter }}</td>
-                                            <td>{{ implant.HospitalCenter }}</td>
+                                            <td>{{ implant.Implant_Type }}</td>
                                             <td>{{ implant.PatientID }}</td>
                                             <td>{{ implant.FirstnameOfPat }}</td>
                                             <td>{{ implant.HVADPumpID }}</td>
@@ -258,9 +280,9 @@
             $("#year option[value='"+yearVal+"']" ).prop('selected',true);
 
 
-
             var searchKey = $(".search-inp").val();
             var hospitalId = $('.custom-select-hospital').val();
+            var implant_type = $('#implant_type').val();
            // var limit = $('#limit').val();
 
 
@@ -285,6 +307,16 @@
                 limit = $('#limit').val();
                 window.location.href = "?limit="+limit+"&searchKey="+searchKey+"&hospitalId="+hospitalId;
             })
+            $('#implant_type').on('change', function() {
+                searchKey =  $(".search-inp").val();
+                hospitalId = $('.custom-select-hospital').val();
+                implant_type = $('#implant_type').val();
+                limit = $('#limit').val();
+                window.location.href = "?limit="+limit+"&searchKey="+searchKey+"&hospitalId="+hospitalId+"&implantType="+implant_type;
+            })
+
+
+
             var searchEvent = function () {
                 var search = $(".search-inp").val();
                 window.location.href = "?searchKey="+search;

@@ -43,8 +43,10 @@ class PatientController extends BaseController
 
         $searchKey = $request->get('searchKey',null);
         $hospitalId = $request->get('hospitalId',null);
-        $implant = $this->_patientRepo->GetImplant($page*$limit,$limit,$searchKey,$hospitalId,$firstmonth,$lastmonth,$year);
+        $implant_type = $request->get('implantType',null);
+        $implant = $this->_patientRepo->GetImplant($page*$limit,$limit,$searchKey,$hospitalId,$firstmonth,$lastmonth,$year,$implant_type);
         $hospitals = $this->_hospitalRepo->GetAllHospital();
+
         return array(
             'implant' => $implant,
             'hospitals' => $hospitals
@@ -70,11 +72,8 @@ class PatientController extends BaseController
     {
         $device = $request->request->get('device');
         $patient = $request->request->get('patient');
-       // var_dump($device);exit;
+
         $deviceOfPat = (new Implant())->MapFrom($device);
-
-
-
 
         $patientObj = (new Patient())->MapFrom($patient);
         $add = $this->_patientRepo->AddImplant($deviceOfPat,$patientObj);

@@ -73,8 +73,6 @@
                                             <td class="sorting_1">{{ hospital.ID }}</td>
                                             <td>{{ hospital.NameOfHosp }}</td>
                                             <td>{{ hospital.City }}</td>
-
-
                                         </tr>
                                     {% endfor %}
                                     </tbody>
@@ -83,27 +81,15 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-6">
-                                <div class="dataTables_info" id="dataTables-example_info" role="status"
-                                     aria-live="polite">Showing 1 to 10 of 57 entries
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
                                 <div class="dataTables_paginate paging_simple_numbers" id="dataTables-example_paginate">
                                     <ul class="pagination">
                                         {% for i in 1..(hospital.ListSize / hospital.Limit)|round(0, 'ceil') %}
                                         <li data-id="{{ i }}" class="paginate_button" aria-controls="dataTables-example"
                                             tabindex="0">
-                                            {% if hospital.SearchKey is not null %}
-                                                <a href="{{ url("hospital_list",{ 'page' :i-1 , 'limit':hospital.Limit , 'searchKey':hospital.SearchKey }) }}">{{ i }} </a></li>
-                                            {% else %}
-                                                <a href="{{ url("hospital_list",{ 'page' :i-1 , 'limit':hospital.Limit }) }}">{{ i }} </a></li>
-                                            {% endif %}
 
+                                                <a href="{{ url("hospital_list",{ 'page' :i-1 , 'limit':hospital.Limit }) }}">{{ i }} </a></li>
 
                                         {% endfor %}
-
-
-
                                     </ul>
                                 </div>
                             </div>
@@ -132,7 +118,6 @@
             return decodeURIComponent(results[2].replace(/\+/g, " "));
         }
 
-
         var page = getParameterByName('page');
         var limit = getParameterByName('limit');
 
@@ -155,7 +140,7 @@
                     window.location.href = "?limit="+this.value;
                 }
 
-            })
+            });
 
             var searchEvent = function () {
                 var search = $(".search-inp").val();
@@ -167,9 +152,39 @@
             });
             $('.searchButton').click(searchEvent);
 
+            var set = $(".pagination li");
+            var length = set.length;
+            $(".pagination li").each(function (i) {
+                $(".pagination li[data-id=1] ").css({"display":"block", "margin-right":"5px"});
+                var dataId;
+                var className = $(this).attr('class');
+                if(className == "paginate_button active"){
+                    $(this).css("display","block");
+                    dataId = $(this).data("id");
+                }
+                $(".pagination li[data-id="+((dataId*1)+1)+"] ").show();
+                $(".pagination li[data-id="+((dataId*1)+2)+"] ").show();
+                $(".pagination li[data-id="+((dataId*1)+3)+"] ").show();
+                $(".pagination li[data-id="+((dataId*1)+4)+"] ").show();
+                $(".pagination li[data-id="+((dataId*1)+5)+"] ").show();
+
+                $(".pagination li[data-id="+((dataId*1)-1)+"] ").show();
+                $(".pagination li[data-id="+((dataId*1)-2)+"] ").show();
+                $(".pagination li[data-id="+((dataId*1)-3)+"] ").show();
+                $(".pagination li[data-id="+((dataId*1)-4)+"] ").show();
+                $(".pagination li[data-id="+((dataId*1)-5)+"] ").show();
+
+                if(i === (length -1)){
+                    $(this).css({"display":"block", "margin-left":"5px"});
+                }
+
+
+
+
+            })
+
 
         });
-
 
     </script>
 {% endblock %}

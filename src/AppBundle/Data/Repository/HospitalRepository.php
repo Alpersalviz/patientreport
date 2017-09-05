@@ -116,7 +116,7 @@ class HospitalRepository extends BaseRepository
             $countResult->execute();
             $countResult = $countResult->fetch();
             if($countResult === null || (int)$countResult['row_count'] == 0)
-                return new PagedList(null,0,$limit,$searchKey);
+                return new PagedList(null,0,$limit,$searchKey,null,null,null,null,null);
 
             $query = "SELECT h.*,c.city
                     FROM hospital h INNER JOIN city c ON h.city_hosp = c.ID";
@@ -131,14 +131,15 @@ class HospitalRepository extends BaseRepository
             $results = $result->fetchAll();
 
             if($results == false)
-                return new PagedList(null, 0,$limit,$searchKey);
+                return new PagedList(null, 0,$limit,$searchKey,null,null,null,null,null);
 
             $hospital = array();
 
             foreach ($results as $result){
                 $hospital[] = (new Hospital())->MapFrom($result);
             }
-            $list = new PagedList($hospital,(int)$countResult['row_count'],$limit,$searchKey);
+
+            $list = new PagedList($hospital,(int)$countResult['row_count'],$limit,$searchKey,null,null,null,null,null);
 
             return $list;
 

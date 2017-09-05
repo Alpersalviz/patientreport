@@ -21,6 +21,7 @@ class Implant
 
     public $SurgicalImplant;
     public $ImplantType;
+    public $Implant_Type;
     public $Surgeon;
     public $IntermacsLevel;
     public $Etiology;
@@ -117,6 +118,7 @@ class Implant
 
         $this->SurgicalImplant = $data["surgicalImplant"];
         $this->ImplantType = $data["implantType"];
+        $this->Implant_Type = $data["implant_type"];
         $this->Surgeon = $data["surgeon"];
         $this->IntermacsLevel = $data["intermacsLevel"];
         $this->Etiology = $data["etiology"];
