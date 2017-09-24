@@ -94,7 +94,7 @@
 
                     </ul>
                 </li>
-                <li >
+                <li>
                     <a href="javascript:;" data-toggle="collapse" data-target="#hasta"><i class="fa fa-fw fa-arrows-v"></i> Patient <i class="fa fa-fw fa-caret-down"></i></a>
                     <ul id="hasta" class="collapse">
 
@@ -108,6 +108,40 @@
 
                     </ul>
                 </li>
+
+
+                <li>
+                    <a href="javascript:;" data-toggle="collapse" data-target="#report"><i class="fa fa-fw fa-arrows-v"></i> Implant Report <i class="fa fa-fw fa-caret-down"></i></a>
+                    <ul id="report" class="collapse">
+
+                        <li>
+                            <a href="{{ url('year_report',{"year" : 2017}) }}">Year Report</a>
+                        </li>
+
+                        <li>
+                            <a href="{{ url('month_report',{"year" : 2017,'month':01}) }}">Month Report</a>
+                        </li>
+
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript:;" data-toggle="collapse" data-target="#competitor"><i class="fa fa-fw fa-arrows-v"></i> Competitor <i class="fa fa-fw fa-caret-down"></i></a>
+                    <ul id="competitor" class="collapse">
+
+                        <li>
+                            <a href="{{ url('competitor_add') }}">Competitor Add</a>
+                        </li>
+
+                        <li>
+                            <a href="{{ url('month_report',{"year" : 2017,'month':01}) }}">Competitor Report</a>
+                        </li>
+
+                    </ul>
+                </li>
+
+
+
 
             </ul>
         </div>

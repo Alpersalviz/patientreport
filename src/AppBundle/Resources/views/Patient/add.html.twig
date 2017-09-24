@@ -136,7 +136,24 @@
                                     <label>How long stayed on device (days) :</label>
                                     <input data-validation="required"  value="1" data-validation-error-msg="Can not Empty" type="text" name="stayedOnDevice" id="stayedOnDevice" tabindex="1" class="form-control">
                                 </div>
-                                <div class="form-group">
+
+                                        <div class="form-group">
+                                            <div class="checkbox">
+                                                <label><input name="pumpExchange" id="pumpExchange" type="checkbox" value="0">Pump Exchange</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group main-pump" style="display: none;">
+                                            <label>Pump Exchange Date:</label>
+
+                                            <div class='input-group date' id='datetimepicker3'>
+                                                <input type='date' name="pumpExchangeDate" id="pumpExchangeDate" class="form-control" />
+                                                <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+
+                                        </span>
+                                            </div>
+                                        </div>
+                                <div class="form-group main-pump" style="display: none;">
                                     <label for="disabledSelect">Note :</label>
                                     <textarea class="form-control" id="textarea-size" name="note" placeholder="Take a note" rows="3"></textarea>
                                 </div>
@@ -480,7 +497,6 @@
     <!-- /.col-lg-12 -->
     </div>
 
-
 {% endblock %}
 
 {% block javascripts %}
@@ -489,6 +505,7 @@
                 var ischeckedOnDevice = 1;
                 var ischeckedTx = 0;
                 var ischeckedEx= 0;
+                var ischeckedPumpExchange= 0;
 
                 var phoneNumbers=[];
                 var Patient={
@@ -578,9 +595,9 @@
                             BatterySerial7Ref: $('#device-add input[name ="batterySerial7Ref"]'),
                             BatterySerial8Ref: $('#device-add input[name ="batterySerial8Ref"]'),
                             MonitorRef: $('#device-add input[name ="monitorRef"]'),
-                            MonitorACAdapterRef: $('#device-add input[name ="monitorACAdapterRef"]')
-
-
+                            MonitorACAdapterRef: $('#device-add input[name ="monitorACAdapterRef"]'),
+                            PumpExchange: $('#device-add input[name ="pumpExchange"]'),
+                            PumpExchangeDate: $('#device-add input[name ="pumpExchangeDate"]')
                         },
                         Values          : function(){
                             return {
@@ -598,7 +615,6 @@
                                     patientGender:  Patient.Add.Fields.PatientGender.val(),
                                     patientHistory: Patient.Add.Fields.PatientHistory.val(),
                                     patientBsa:     Patient.Add.Fields.PatientBsa.val()
-
                                 },
                                 device:{
                                     ID:                     null,
@@ -628,7 +644,6 @@
                                     pumpFlowSettling:       Patient.Add.Fields.PumpFlowSettling.val(),
                                     referringClinician:     Patient.Add.Fields.ReferringClinician.val(),
                                     proctorName:            Patient.Add.Fields.ProctorName.val(),
-
 
                                     outflowGraft:            Patient.Add.Fields.OutflowGraft.val(),
                                     sterileSurgicalTools:    Patient.Add.Fields.SterileSurgicalTools.val(),
@@ -660,7 +675,7 @@
                                     showerBagRef:               Patient.Add.Fields.ShowerBagRef.val(),
                                     batteryChargerRef:          Patient.Add.Fields.BatteryChargerRef.val(),
                                     batteryChargerACAdapterRef: Patient.Add.Fields.BatteryChargerACAdapterRef.val(),
-                                    dCAdaptorRefRef:               Patient.Add.Fields.DCAdaptorRef.val(),
+                                    dCAdaptorRefRef:            Patient.Add.Fields.DCAdaptorRef.val(),
                                     mainControllerRef:          Patient.Add.Fields.MainControllerRef.val(),
                                     backUpControllerRef:        Patient.Add.Fields.BackUpControllerRef.val(),
                                     mainRef:                    Patient.Add.Fields.MainRef.val(),
@@ -674,8 +689,9 @@
                                     batterySerial7Ref:          Patient.Add.Fields.BatterySerial7Ref.val(),
                                     batterySerial8Ref:          Patient.Add.Fields.BatterySerial8Ref.val(),
                                     monitorRef:                 Patient.Add.Fields.MonitorRef.val(),
-                                    monitorACAdapterRef:        Patient.Add.Fields.MonitorACAdapterRef.val()
-
+                                    monitorACAdapterRef:        Patient.Add.Fields.MonitorACAdapterRef.val(),
+                                    pumpExchange:               ischeckedPumpExchange,
+                                    pumpExchangeDate:           Patient.Add.Fields.PumpExchangeDate.val()
                                 }
                             };
                         },
@@ -684,7 +700,6 @@
                                 e.preventDefault();
                                 phoneNumbers = [];
                                 $('.phones').each(function () {
-
                                     $(this).unmask(mask);
                                     if( $(this).val() != null){
                                     phoneNumbers.push({
@@ -713,8 +728,6 @@
                                             }, 1000);
                                         }
                                     })
-
-
                             })
                         }
                     },
@@ -747,6 +760,15 @@
                             ischeckedEx = 0;
                         }
                     });
+
+                    $('#device-add input[name ="pumpExchange"]').change(function() {
+                        if(this.checked) {
+                            ischeckedPumpExchange = 1;
+                        }else {
+                            ischeckedPumpExchange = 0;
+                        }
+                    });
+
                     $('#btn-phone').click(function () {
                        $('#phone').append(' <input data-validation="required" style="margin-bottom: 18px"  data-validation-error-msg="Can not Empty" type="text" name="phone" class="form-control phones">');
                         $('.phones').each(function () {
@@ -781,9 +803,20 @@
                             format: 'YYYY-MM-DD'
                         });
                     });
+
+                    $(function () {
+                        $('#datetimepicker3').datetimepicker({
+                            format: 'YYYY-MM-DD'
+                        });
+                    });
                     Patient.Add.Fields.ImplantDate.val(today);
                     Patient.Add.Fields.StatusDate.val(today);
+                    Patient.Add.Fields.PumpExchangeDate.val(today);
 
+
+                    $("#pumpExchange").on('click',function () {
+                        $(".main-pump").show();
+                    })
                     $('#datetimepicker1').on('dp.change', function(e){
                         var diff = daydiff(parseDate($('#statusDate').val()), parseDate($('#operationDate').val()));
                         $("#stayedOnDevice").val((diff*1) + 1);
@@ -795,6 +828,7 @@
                         $("#stayedOnDevice").val((diff*1) + 1);
 
                     })
+           
                     function parseDate(str) {
                         var mdy = str.split('-');
                         return new Date(mdy[0], mdy[1]-1, mdy[2]);

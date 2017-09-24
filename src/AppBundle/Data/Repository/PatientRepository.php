@@ -8,6 +8,9 @@
 
 namespace AppBundle\Data\Repository;
 
+use AppBundle\Data\Model\HospitalReport;
+use AppBundle\Data\Model\MonthCountReport;
+use AppBundle\Data\Model\MontlyImplant;
 use AppBundle\Data\Model\Patient;
 use AppBundle\Data\Model\Implant;
 use AppBundle\Domain\Model\PagedList;
@@ -153,8 +156,8 @@ class PatientRepository extends BaseRepository
                 return false;
 
             $query = "INSERT INTO implant
-                      (patientID, HVADPumpID, hospitalID, implant_date, status_date, patient_status, descr_dev_of_pat, stay_duration_of_dev,qty,on_device,ex,tx,surgicalImplant,implantType,implant_type, surgeon, intermacsLevel, etiology, lavareCycle, cpbTime, pumpSpeed, pumpWatts, pumpFlow, pumpFlowSettling, referringClinician ,proctorName,outflowGraft, sterileSurgicalTools , drivelineExtensionCable , shoulderBag , showerBag,  batteryCharger ,batteryChargerACAdapter , dCAdaptor, mainController, backUpController ,main, backUp, batterySerial1, batterySerial2 ,batterySerial3 ,batterySerial4 ,batterySerial5 , batterySerial6 ,batterySerial7 ,batterySerial8 ,monitor ,monitorACAdapter ,outflowGraftRef, sterileSurgicalToolsRef , drivelineExtensionCableRef , shoulderBagRef , showerBagRef ,  batteryChargerRef ,batteryChargerACAdapterRef , dCAdaptorRef , mainControllerRef , backUpControllerRef , mainRef, backUpRef , batterySerial1Ref , batterySerial2Ref ,batterySerial3Ref ,batterySerial4Ref ,batterySerial5Ref , batterySerial6Ref ,batterySerial7Ref ,batterySerial8Ref ,monitorRef ,monitorACAdapterRef) VALUES 
-                      (:patientID,:HVADPumpID,:hospitalID,:implant_date,:status_date,:patient_status,:descr_dev_of_pat,:stay_duration_of_dev,:qty,:on_device,:ex,:tx,:surgicalImplant, :implantType,:implant_type, :surgeon, :intermacsLevel, :etiology, :lavareCycle, :cpbTime, :pumpSpeed, :pumpWatts, :pumpFlow, :pumpFlowSettling, :referringClinician, :proctorName,:outflowGraft, :sterileSurgicalTools , :drivelineExtensionCable , :shoulderBag , :showerBag,  :batteryCharger ,:batteryChargerACAdapter , :dCAdaptor, :mainController, :backUpController , :main, :backUp, :batterySerial1, :batterySerial2 , :batterySerial3 , :batterySerial4 , :batterySerial5 , :batterySerial6 ,:batterySerial7 ,:batterySerial8 ,:monitor ,:monitorACAdapter , :outflowGraftRef, :sterileSurgicalToolsRef , :drivelineExtensionCableRef , :shoulderBagRef , :showerBagRef ,  :batteryChargerRef , :batteryChargerACAdapterRef , :dCAdaptorRef , :mainControllerRef , :backUpControllerRef , :mainRef, :backUpRef , :batterySerial1Ref , :batterySerial2Ref , :batterySerial3Ref , :batterySerial4Ref , :batterySerial5Ref , :batterySerial6Ref , :batterySerial7Ref , :batterySerial8Ref , :monitorRef , :monitorACAdapterRef)";
+                      (patientID, HVADPumpID, hospitalID, implant_date, status_date, patient_status, descr_dev_of_pat, stay_duration_of_dev,qty,on_device,ex,tx,surgicalImplant,implantType,implant_type, surgeon, intermacsLevel, etiology, lavareCycle, cpbTime, pumpSpeed, pumpWatts, pumpFlow, pumpFlowSettling, referringClinician ,proctorName,outflowGraft, sterileSurgicalTools , drivelineExtensionCable , shoulderBag , showerBag,  batteryCharger ,batteryChargerACAdapter , dCAdaptor, mainController, backUpController ,main, backUp, batterySerial1, batterySerial2 ,batterySerial3 ,batterySerial4 ,batterySerial5 , batterySerial6 ,batterySerial7 ,batterySerial8 ,monitor ,monitorACAdapter ,outflowGraftRef, sterileSurgicalToolsRef , drivelineExtensionCableRef , shoulderBagRef , showerBagRef ,  batteryChargerRef ,batteryChargerACAdapterRef , dCAdaptorRef , mainControllerRef , backUpControllerRef , mainRef, backUpRef , batterySerial1Ref , batterySerial2Ref ,batterySerial3Ref ,batterySerial4Ref ,batterySerial5Ref , batterySerial6Ref ,batterySerial7Ref ,batterySerial8Ref ,monitorRef ,monitorACAdapterRef,pumpExchange,pumpExchangeDate ) VALUES 
+                      (:patientID,:HVADPumpID,:hospitalID,:implant_date,:status_date,:patient_status,:descr_dev_of_pat,:stay_duration_of_dev,:qty,:on_device,:ex,:tx,:surgicalImplant, :implantType,:implant_type, :surgeon, :intermacsLevel, :etiology, :lavareCycle, :cpbTime, :pumpSpeed, :pumpWatts, :pumpFlow, :pumpFlowSettling, :referringClinician, :proctorName,:outflowGraft, :sterileSurgicalTools , :drivelineExtensionCable , :shoulderBag , :showerBag,  :batteryCharger ,:batteryChargerACAdapter , :dCAdaptor, :mainController, :backUpController , :main, :backUp, :batterySerial1, :batterySerial2 , :batterySerial3 , :batterySerial4 , :batterySerial5 , :batterySerial6 ,:batterySerial7 ,:batterySerial8 ,:monitor ,:monitorACAdapter , :outflowGraftRef, :sterileSurgicalToolsRef , :drivelineExtensionCableRef , :shoulderBagRef , :showerBagRef ,  :batteryChargerRef , :batteryChargerACAdapterRef , :dCAdaptorRef , :mainControllerRef , :backUpControllerRef , :mainRef, :backUpRef , :batterySerial1Ref , :batterySerial2Ref , :batterySerial3Ref , :batterySerial4Ref , :batterySerial5Ref , :batterySerial6Ref , :batterySerial7Ref , :batterySerial8Ref , :monitorRef , :monitorACAdapterRef , :pumpExchange ,:pumpExchangeDate)";
 
             $result = $this->getConnection()->prepare($query);
             $result->execute(array(
@@ -229,9 +232,9 @@ class PatientRepository extends BaseRepository
                 ':batterySerial7Ref'          => $device->BatterySerial7Ref,
                 ':batterySerial8Ref'          => $device->BatterySerial8Ref,
                 ':monitorRef'                 => $device->MonitorRef,
-                ':monitorACAdapterRef'        => $device->MonitorACAdapterRef
-
-
+                ':monitorACAdapterRef'        => $device->MonitorACAdapterRef,
+                ':pumpExchange'               => $device->PumpExchange,
+                ':pumpExchangeDate'           => $device->PumpExchangeDate
             ));
 
             if ($result == false)
@@ -367,8 +370,9 @@ class PatientRepository extends BaseRepository
                       batterySerial7Ref = :batterySerial7Ref,
                       batterySerial8Ref = :batterySerial8Ref,
                       monitorRef = :monitorRef,
-                      monitorACAdapterRef = :monitorACAdapterRef
-              
+                      monitorACAdapterRef = :monitorACAdapterRef,
+                      pumpExchange = :pumpExchange,
+                      pumpExchangeDate = :pumpExchangeDate
                       WHERE patientID = ".$this->getConnection()->quote($patient->PatientID);
 
             $result = $this->getConnection()->prepare($query);
@@ -444,7 +448,9 @@ class PatientRepository extends BaseRepository
                 ':batterySerial7Ref'          => $device->BatterySerial7Ref,
                 ':batterySerial8Ref'          => $device->BatterySerial8Ref,
                 ':monitorRef'                 => $device->MonitorRef,
-                ':monitorACAdapterRef'        => $device->MonitorACAdapterRef
+                ':monitorACAdapterRef'        => $device->MonitorACAdapterRef,
+                ':pumpExchange'               => (int)$device->PumpExchange,
+                ':pumpExchangeDate'           => $device->PumpExchangeDate
             ));
 
             if ($result == false)
@@ -716,5 +722,235 @@ class PatientRepository extends BaseRepository
     }
 
 
+    public function GetImplantMontlyReport($year=2017){
+        try{
 
+
+            $montlyQuery="SELECT SUM(countMonth) as countMonth , cmonth as Month, name_hosp, ID FROM
+                            (
+                            SELECT COUNT(i.ID) as countMonth, MONTH(i.implant_date) as cmonth , h.name_hosp as name_hosp , h.ID as ID
+                              FROM implant i 
+                              INNER JOIN hospital h ON h.ID = i.hospitalID
+                              WHERE i.implant_date BETWEEN '".$year."-01-01 00:00:00' AND '".$year."-12-31 23:59:59' 
+                              GROUP BY MONTH(i.implant_date) , h.name_hosp,h.ID
+                            UNION ALL
+                            SELECT COUNT(i.ID) as countMonth, MONTH(i.pumpExchangeDate) as cmonth , h.name_hosp as name_hosp , h.ID as ID
+                              FROM implant i 
+                              INNER JOIN hospital h ON h.ID = i.hospitalID
+                              WHERE i.pumpExchange = 1  AND  i.pumpExchangeDate BETWEEN '".$year."-01-01 00:00:00' AND '".$year."-12-31 23:59:59'
+                              GROUP BY MONTH(i.pumpExchangeDate) , h.name_hosp,h.ID
+                            
+                            ) report GROUP BY ID,cmonth,name_hosp";
+
+
+            $result = $this->getConnection()->prepare($montlyQuery);
+            $result->execute();
+
+            if ($result == false)
+                return false;
+
+            $results = $result->fetchAll();
+
+
+            $montlyImplant = array();
+            foreach ($results as $result) {
+                $montlyImplant[] = (new MontlyImplant())->MapFrom($result);
+            }
+            return $montlyImplant;
+
+        }catch (Exception $e){
+            return false;
+        }
+    }
+    public function GetImplantHospitalReport($year){
+        try{
+
+            $montlyQuery="SELECT SUM(countHospital) as countHospital, name_hosp, ID FROM
+                            (
+                             SELECT COUNT(i.ID) as countHospital, h.name_hosp as name_hosp , h.ID as ID
+                                FROM implant i 
+                                INNER JOIN hospital h ON h.ID = i.hospitalID
+                                WHERE i.implant_date BETWEEN '".$year."-01-01 00:00:00' AND '".$year."-12-31 23:59:59' 
+                                GROUP BY h.name_hosp , h.ID
+                              UNION ALL
+                            SELECT COUNT(i.ID) as countHospital, h.name_hosp as name_hosp , h.ID as ID
+                                FROM implant i 
+                                INNER JOIN hospital h ON h.ID = i.hospitalID
+                                WHERE i.pumpExchange = 1  AND i.pumpExchangeDate BETWEEN '".$year."-01-01 00:00:00' AND '".$year."-12-31 23:59:59' 
+                                GROUP BY h.name_hosp , h.ID
+    
+                            
+                            ) report GROUP BY ID,name_hosp";
+
+
+            $result = $this->getConnection()->prepare($montlyQuery);
+            $result->execute();
+
+            if ($result == false)
+                return false;
+
+            $results = $result->fetchAll();
+
+            $montlyImplant = array();
+            foreach ($results as $result) {
+                $montlyImplant[] = (new HospitalReport())->MapFrom($result);
+            }
+            return $montlyImplant;
+
+        }catch (Exception $e){
+            return false;
+        }
+    }
+
+    public function GetImplantMountCountReport($year = 2015){
+        try{
+
+
+            $montlyQuery="SELECT SUM(countMonth) as countMonth , month FROM
+                        (
+                        SELECT COUNT(i.ID) as countMonth, MONTH(i.implant_date) as month
+                            FROM implant i 
+                            WHERE i.implant_date BETWEEN '".$year."-01-01 00:00:00' AND '".$year."-12-31 23:59:59' 
+                            GROUP BY MONTH(i.implant_date)
+                        
+                          UNION ALL
+                        
+                        SELECT COUNT(i.ID) as countMonth, MONTH(i.pumpExchangeDate) as month
+                            FROM implant i 
+                            WHERE i.pumpExchange = 1  AND i.pumpExchangeDate BETWEEN '".$year."-01-01 00:00:00' AND '".$year."-12-31 23:59:59' 
+                            GROUP BY MONTH(i.pumpExchangeDate)
+                        
+                        ) report GROUP BY month";
+
+            $result = $this->getConnection()->prepare($montlyQuery);
+            $result->execute();
+
+            if ($result == false)
+                return false;
+
+            $results = $result->fetchAll();
+
+            $montlyImplant = array();
+            foreach ($results as $result) {
+                $montlyImplant[] = (new MonthCountReport())->MapFrom($result);
+            }
+            return $montlyImplant;
+
+        }catch (Exception $e){
+            return false;
+        }
+    }
+
+
+    public function GetImplantTotalCountReport($year = 2015){
+        try{
+
+
+            $montlyQuery="SELECT SUM(countMonth) as countMonth  FROM
+                        (
+                          SELECT COUNT(i.ID) as countMonth
+                            FROM implant i 
+                            WHERE i.implant_date BETWEEN '".$year."-01-01 00:00:00' AND '".$year."-12-31 23:59:59'
+                        UNION ALL
+                        SELECT COUNT(i.ID) as countMonth
+                            FROM implant i 
+                            WHERE  i.pumpExchange = 1   AND i.pumpExchangeDate BETWEEN '".$year."-01-01 00:00:00' AND '".$year."-12-31 23:59:59' 
+
+                      )a";
+
+
+
+            $result = $this->getConnection()->prepare($montlyQuery);
+            $result->execute();
+
+            if ($result == false)
+                return false;
+
+            $result = $result->fetch();
+
+
+            return $result;
+
+        }catch (Exception $e){
+            return false;
+        }
+    }
+
+    public function GetImplantMontlyReportMoth($year=2017,$month = 01){
+        try{
+            $montlyQuery="SELECT SUM(countMonth) as countMonth , cmonth as Month, name_hosp, ID FROM
+                            (
+                            SELECT COUNT(i.ID) as countMonth, MONTH(i.implant_date) as cmonth , h.name_hosp as name_hosp , h.ID as ID
+                              FROM implant i 
+                              INNER JOIN hospital h ON h.ID = i.hospitalID
+                              WHERE i.implant_date BETWEEN '".$year."-".$month."-01 00:00:00' AND '".$year."-".$month."-31 23:59:59' 
+                              GROUP BY MONTH(i.implant_date) , h.name_hosp,h.ID
+                            UNION ALL
+                            SELECT COUNT(i.ID) as countMonth, MONTH(i.pumpExchangeDate) as cmonth , h.name_hosp as name_hosp , h.ID as ID
+                              FROM implant i 
+                              INNER JOIN hospital h ON h.ID = i.hospitalID
+                              WHERE i.pumpExchange = 1  AND  i.pumpExchangeDate BETWEEN '".$year."-".$month."-01 00:00:00' AND '".$year."-".$month."-31 23:59:59'
+                              GROUP BY MONTH(i.pumpExchangeDate) , h.name_hosp,h.ID
+                            
+                            ) report GROUP BY ID,cmonth,name_hosp";
+
+
+            $result = $this->getConnection()->prepare($montlyQuery);
+            $result->execute();
+
+            if ($result == false)
+                return false;
+
+            $results = $result->fetchAll();
+
+
+            $montlyImplant = array();
+            foreach ($results as $result) {
+                $montlyImplant[] = (new MontlyImplant())->MapFrom($result);
+            }
+            return $montlyImplant;
+
+        }catch (Exception $e){
+            return false;
+        }
+    }
+
+
+    public function GetImplantMountCountReportMonth($year = 2017,$month = 01){
+        try{
+
+
+            $montlyQuery="SELECT SUM(countMonth) as countMonth , month FROM
+                        (
+                        SELECT COUNT(i.ID) as countMonth, MONTH(i.implant_date) as month
+                            FROM implant i 
+                            WHERE i.implant_date BETWEEN '".$year."-".$month."-01 00:00:00' AND '".$year."-".$month."-31 23:59:59' 
+                            GROUP BY MONTH(i.implant_date)
+                        
+                          UNION ALL
+                        
+                        SELECT COUNT(i.ID) as countMonth, MONTH(i.pumpExchangeDate) as month
+                            FROM implant i 
+                            WHERE i.pumpExchange = 1  AND i.pumpExchangeDate  BETWEEN '".$year."-".$month."-01 00:00:00' AND '".$year."-".$month."-31 23:59:59' 
+                            GROUP BY MONTH(i.pumpExchangeDate)
+                        
+                        ) report GROUP BY month";
+
+            $result = $this->getConnection()->prepare($montlyQuery);
+            $result->execute();
+
+
+
+            $result = $result->fetch();
+            if ($result == false)
+                return false;
+
+                $montlyImplant = (new MonthCountReport())->MapFrom($result);
+
+            return $montlyImplant;
+
+        }catch (Exception $e){
+            return false;
+        }
+    }
 }

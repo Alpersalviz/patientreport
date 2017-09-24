@@ -147,6 +147,22 @@
                                                 <input data-validation="required"  value="1" data-validation-error-msg="Can not Empty" type="text" name="stayedOnDevice" id="stayedOnDevice" tabindex="1" class="form-control" value="{{ implant.StayDurationOfDev }}">
                                             </div>
                                             <div class="form-group">
+                                                <div class="checkbox">
+                                                    <label><input name="pumpExchange" id="pumpExchange" type="checkbox" value="{{ implant.PumpExchange}}" {% if implant.PumpExchange == 1 %} checked {% endif %}>Pump Exchange</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group main-pump" {% if implant.PumpExchange == 0 %} style="display: none;" {% endif %}>
+                                                <label>Pump Exchange Date:</label>
+
+                                                <div class='input-group date' id='datetimepicker3'>
+                                                    <input type='date' name="pumpExchangeDate" id="pumpExchangeDate" class="form-control" value="{{ implant.PumpExchangeDate }}"/>
+                                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+
+                                        </span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
                                                 <label for="disabledSelect">Note :</label>
                                                 <textarea class="form-control" id="textarea-size" name="note" placeholder="Take a note" rows="3">{{ implant.DescrDevOfPat }}</textarea>
                                             </div>
@@ -509,9 +525,11 @@
 {% block javascripts %}
     <script type="text/javascript">
         var mask = "(999) 999-9999";
-        var ischeckedOndevice = 1;
+        var ischeckedOndevice = 0;
         var ischeckedTx = 0;
         var ischeckedEx = 0;
+
+        var ischeckedPumpExchange= 0;
         var hospitalID = $("#hospitalID").val();
         var implant_type = $("#implant_type").val();
 
@@ -603,7 +621,9 @@
                     BatterySerial7Ref: $('#device-add input[name ="batterySerial7Ref"]'),
                     BatterySerial8Ref: $('#device-add input[name ="batterySerial8Ref"]'),
                     MonitorRef: $('#device-add input[name ="monitorRef"]'),
-                    MonitorACAdapterRef: $('#device-add input[name ="monitorACAdapterRef"]')
+                    MonitorACAdapterRef: $('#device-add input[name ="monitorACAdapterRef"]'),
+                    PumpExchange: $('#device-add input[name ="pumpExchange"]'),
+                    PumpExchangeDate: $('#device-add input[name ="pumpExchangeDate"]')
 
                 },
                 Values          : function(){
@@ -696,7 +716,9 @@
                             batterySerial7Ref:          Patient.Add.Fields.BatterySerial7Ref.val(),
                             batterySerial8Ref:          Patient.Add.Fields.BatterySerial8Ref.val(),
                             monitorRef:                 Patient.Add.Fields.MonitorRef.val(),
-                            monitorACAdapterRef:        Patient.Add.Fields.MonitorACAdapterRef.val()
+                            monitorACAdapterRef:        Patient.Add.Fields.MonitorACAdapterRef.val(),
+                            pumpExchange:               ischeckedPumpExchange,
+                            pumpExchangeDate:           Patient.Add.Fields.PumpExchangeDate.val()
 
                         }
                     };
@@ -775,6 +797,14 @@
                 }
             });
 
+            $('#device-add input[name ="pumpExchange"]').change(function() {
+                if(this.checked) {
+                    ischeckedPumpExchange = 1;
+                }else {
+                    ischeckedPumpExchange = 0;
+                }
+            });
+
 
             $('#btn-phone').click(function () {
                 $('#phone').append(' <input data-validation="required" style="margin-bottom: 18px"  data-validation-error-msg="Can not Empty" type="text" name="phone" class="form-control phones">');
@@ -810,9 +840,16 @@
                     format: 'YYYY-MM-DD'
                 });
             });
+            $(function () {
+                $('#datetimepicker3').datetimepicker({
+                    format: 'YYYY-MM-DD'
+                });
+            });
            // Patient.Add.Fields.ImplantDate.val(today);
             //Patient.Add.Fields.StatusDate.val(today);
-
+            $("#pumpExchange").on('click',function () {
+                $(".main-pump").show();
+            })
             $('#datetimepicker1').on('dp.change', function(e){
                 var diff = daydiff(parseDate($('#statusDate').val()), parseDate($('#operationDate').val()));
                 $("#stayedOnDevice").val((diff*1) + 1);

@@ -57,3 +57,18 @@ services:
           class: AppBundle\Controller\HospitalController
           arguments: ["@app.hospital_repository"]
           parent: "app.base_controller"
+
+      app.competitor_repository:
+          class: AppBundle\Data\Repository\CompetitorRepository
+          parent: app.base_repository
+
+      app.competitor_controller:
+          class: AppBundle\Controller\CompetitorController
+          arguments: ["@app.competitor_repository", "@app.hospital_repository"]
+          parent: "app.base_controller"
+
+      app.generichelper:
+        class: AppBundle\Domain\Helper\GenericHelper
+        arguments: ["@service_container","@request_stack","@app.patient_repository","@app.competitor_repository"]
+        tags:
+            - { name: twig.extension }

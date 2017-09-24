@@ -94,6 +94,9 @@ class Implant
 
     public $PhoneNumbers;
 
+    public $PumpExchange;
+    public $PumpExchangeDate;
+
 
     /**
      * @param array $data
@@ -236,6 +239,9 @@ class Implant
                 $this->PhoneNumbers[] = (new PhoneNumberOfPat())->MapFrom($row);
             }
         }
+        $this->PumpExchange = $data["pumpExchange"];
+
+        $this->PumpExchangeDate = $data["pumpExchangeDate"];
 
         return $this;
 

@@ -90,4 +90,52 @@ class DefaultController extends BaseController
 
     }
 
+
+    /**
+     *@Route("/report/{year}",name="year_report")
+     *@Template("AppBundle:Default:year_report.html.twig")
+     */
+    public function YearReportAction($year)
+    {
+       $montlyImplant = $this->_patientRepo->GetImplantMontlyReport($year);
+       $hospitalImplant = $this->_patientRepo->GetImplantHospitalReport($year);
+       $totalCountImplant = $this->_patientRepo->GetImplantTotalCountReport($year);
+
+        return array(
+            'montly' => $montlyImplant,
+            'hospital' => $hospitalImplant,
+            'totalCount' => $totalCountImplant["countMonth"],
+            'year' => $year
+        );
+    }
+
+
+    /**
+     *@Route("/report/{year}/{month}",name="month_report")
+     *@Template("AppBundle:Default:month_report.html.twig")
+     */
+    public function MonthReportAction($year,$month)
+    {
+        $montlyImplant = $this->_patientRepo->GetImplantMontlyReportMoth($year,$month);
+        $totalCount = $this->_patientRepo->GetImplantMountCountReportMonth($year,$month);
+
+        return array(
+            'montly' => $montlyImplant,
+            'totalCount' => $totalCount,
+            'year' => $year,
+            'month' => $month
+        );
+    }
+    /**
+     *@Route("/ajax/report",name="ajax_report")
+     */
+    public function AjaxGetReportAction()
+    {
+        $montlyImplant = $this->_patientRepo->GetImplantMontlyReport();
+
+        return new JsonResponse(array(
+            'montly' => $montlyImplant
+            )
+        );
+    }
 }
