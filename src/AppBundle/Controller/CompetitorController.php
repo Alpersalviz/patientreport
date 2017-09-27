@@ -92,5 +92,22 @@ class CompetitorController extends BaseController
         );
     }
 
+    /**
+     *@Route("/competitor/month/{year}/{month}",name="month_competitor_report")
+     *@Template("AppBundle:Competitor:month_competitor_report.html.twig")
+     */
+    public function MonthReportAction($year,$month)
+    {
+        $competitorReport = $this->_competitorRepo->GetCompetitorMonthByYear($year,$month);
+        $hospitals = $this->_competitorRepo->GetCompetitorHospitaMonthlByYear($year,$month);
+        $totalCount =  $this->_competitorRepo->GetCountMothCompetitor($year,$month);
 
+        return array(
+            'competitors' => $competitorReport,
+            'hospitals' => $hospitals,
+            'year'  => $year,
+            'totalCount'  => $totalCount["count"],
+            'month' => $month
+        );
+    }
 }

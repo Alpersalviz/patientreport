@@ -40,6 +40,30 @@ class CompetitorRepository extends BaseRepository
         return $competitors;
     }
 
+
+    public function GetCompetitorMonthByYear($year,$month)
+    {
+        $query = "SELECT SUM(c.count) as count ,c.month as month , h.ID as hospitalId FROM competitor_about c
+                    INNER JOIN  hospital h ON h.ID = c.hospitalId
+                    WHERE c.year =".$year." AND c.month = ".$month."
+                    
+                    GROUP BY  c.month, h.ID";
+
+        $result = $this->getConnection()->prepare($query);
+        $result->execute();
+
+        if ($result == false)
+            return false;
+
+        $results = $result->fetchAll();
+
+        $competitors = array();
+        foreach ($results as $result) {
+            $competitors[] = (new Competitor())->MapFrom($result);
+        }
+        return $competitors;
+    }
+
     public function GetCompetitorHospitalByYear($year)
     {
         $query = "Select  SUM(c.count) as count, h.name_hosp,c.hospitalId from competitor_about c
@@ -62,7 +86,27 @@ class CompetitorRepository extends BaseRepository
         return $competitors;
     }
 
+    public function GetCompetitorHospitaMonthlByYear($year,$month)
+    {
+        $query = "Select  SUM(c.count) as count, h.name_hosp,c.hospitalId from competitor_about c
+                    INNER JOIN  hospital h ON h.ID = c.hospitalId
+                    WHERE c.year = ".$year." AND c.month = ".$month."
+                    GROUP BY  h.ID";
 
+        $result = $this->getConnection()->prepare($query);
+        $result->execute();
+
+        if ($result == false)
+            return false;
+
+        $results = $result->fetchAll();
+
+        $competitors = array();
+        foreach ($results as $result) {
+            $competitors[] = (new Competitor())->MapFrom($result);
+        }
+        return $competitors;
+    }
 
 
     public function GetTotalCountCompetitor($year)
@@ -70,6 +114,28 @@ class CompetitorRepository extends BaseRepository
         $query = "SELECT SUM(c.count) as count ,c.month as month FROM competitor_about c
                     INNER JOIN  hospital h ON h.ID = c.hospitalId
                     WHERE c.year =".$year."  
+                    GROUP BY  c.month";
+
+        $result = $this->getConnection()->prepare($query);
+        $result->execute();
+
+        if ($result == false)
+            return false;
+
+        $results = $result->fetchAll();
+
+        $competitors = array();
+        foreach ($results as $result) {
+            $competitors[] = (new Competitor())->MapFrom($result);
+        }
+        return $competitors;
+    }
+
+    public function GetTotalCountMonthCompetitor($year,$month)
+    {
+        $query = "SELECT SUM(c.count) as count ,c.month as month FROM competitor_about c
+                    INNER JOIN  hospital h ON h.ID = c.hospitalId
+                    WHERE c.year =".$year."  AND c.month = ".$month."
                     GROUP BY  c.month";
 
         $result = $this->getConnection()->prepare($query);
@@ -102,6 +168,23 @@ class CompetitorRepository extends BaseRepository
 
         return $results;
     }
+
+    public function GetCountMothCompetitor($year,$month)
+    {
+        $query = "Select SUM(c.count) as count from competitor_about c
+                  WHERE c.year =".$year." AND c.month = ".$month;
+
+        $result = $this->getConnection()->prepare($query);
+        $result->execute();
+
+        if ($result == false)
+            return false;
+
+        $results = $result->fetch();
+
+        return $results;
+    }
+
 
 
 
