@@ -10,7 +10,7 @@
     <meta name="author" content="">
 
     <title>Mas Admin</title>
-    {% set version = '?v=0.0.4' %}
+    {% set version = '?v=0.0.5' %}
 
     <!-- Bootstrap Core CSS -->
     <link href="{{ asset('static/css/bootstrap.min.css') }}{{ version }}" rel="stylesheet">
@@ -134,9 +134,11 @@
                         </li>
 
                         <li>
-                            <a href="{{ url('year_competitor_report',{"year" : 2017}) }}">Competitor Report</a>
+                            <a href="{{ url('year_competitor_report',{"year" : 2017}) }}">Year Competitor Report</a>
                         </li>
-
+                        <li>
+                            <a href="{{ url('month_competitor_report',{"year" : 2017 , "month" : 1}) }}">Month Competitor Report</a>
+                        </li>
                     </ul>
                 </li>
 
