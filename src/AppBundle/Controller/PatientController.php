@@ -106,11 +106,15 @@ class PatientController extends BaseController
         $patient = $request->request->get('patient');
 
 
+
         $deviceOfPat = (new Implant())->MapFrom($device);
+
         $patientObj = (new Patient())->MapFrom($patient);
+
 //        var_dump($deviceOfPat->OutflowGraft);exit;
 
         $add = $this->_patientRepo->UpdateImplant($deviceOfPat,$patientObj);
+
 
         return new JsonResponse(array(
             'success' => $add

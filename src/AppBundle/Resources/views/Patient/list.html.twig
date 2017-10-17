@@ -28,7 +28,7 @@
                         <button style="float: left; margin-right: 10px" type="button close"  aria-label="Close" class="btn btn-default">{{ implant.SearchKey }} <i
                                     class="fa fa-remove"></i></button>
                     {% endif %}
-                    <input type="text" class="form-control search-inp" value="search" placeholder="Search">
+                    <input type="text" class="form-control search-inp" value="" placeholder="search">
                     <span class="input-group-btn">
                                                 <button class="btn searchButton btn-default" type="button"><i
                                                             class="fa fa-search"></i>
@@ -306,14 +306,14 @@
                 searchKey =  $(".search-inp").val();
                 hospitalId = $('.custom-select-hospital').val();
                 limit = $('#limit').val();
-                window.location.href = "?limit="+limit+"&searchKey="+searchKey+"&hospitalId="+hospitalId;
+                window.location.href = "?limit="+limit+"&hospitalId="+hospitalId;
             })
             $('#implant_type').on('change', function() {
                 searchKey =  $(".search-inp").val();
                 hospitalId = $('.custom-select-hospital').val();
                 implant_type = $('#implant_type').val();
                 limit = $('#limit').val();
-                window.location.href = "?limit="+limit+"&searchKey="+searchKey+"&hospitalId="+hospitalId+"&implantType="+implant_type;
+                window.location.href = "?limit="+limit+"&implantType="+implant_type;
             })
 
 

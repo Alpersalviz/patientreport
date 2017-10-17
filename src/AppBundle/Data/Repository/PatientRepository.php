@@ -376,7 +376,6 @@ class PatientRepository extends BaseRepository
                       WHERE patientID = ".$this->getConnection()->quote($patient->PatientID);
 
             $result = $this->getConnection()->prepare($query);
-           // var_dump($device->StatusDate);exit;
             $result->execute(array(
                 ':patientID'            => $device->PatientID,
                 ':HVADPumpID'           => $device->HVADPumpID,
@@ -450,7 +449,7 @@ class PatientRepository extends BaseRepository
                 ':monitorRef'                 => $device->MonitorRef,
                 ':monitorACAdapterRef'        => $device->MonitorACAdapterRef,
                 ':pumpExchange'               => (int)$device->PumpExchange,
-                ':pumpExchangeDate'           => $device->PumpExchangeDate
+                ':pumpExchangeDate'           => $device->PumpExchangeDate == null ? date("Y/m/d") : $device->PumpExchangeDate
             ));
 
             if ($result == false)
@@ -485,31 +484,19 @@ class PatientRepository extends BaseRepository
 
                     if($searchKey !== null && $searchKey !== 'search')
                     {
-                        $countQuery .='p.firstname_pat
+                        $countQuery .='p.patientID
                                 LIKE "%'.$searchKey.'%" OR h.name_hosp LIKE "%'.$searchKey.'%"';
                     }
 
 
                 if($hospitalId !== null && $hospitalId !== 'null' ){
-                    if($searchKey !== null && $searchKey !== 'search')
-                    {
-
-                        $countQuery .= ' AND ';
-                    }
 
                     $countQuery .='i.hospitalID = '.$hospitalId;
                 }
 
 
 
-
-
                 if($implant_type !== null && $implant_type !== 'null' ){
-                    if($hospitalId !== null && $hospitalId !== 'null')
-                    {
-
-                        $countQuery .= ' AND ';
-                    }
 
                     $countQuery .='i.implant_type = '.$implant_type;
                 }
@@ -540,31 +527,25 @@ class PatientRepository extends BaseRepository
 
             if($firstmonth == '0' ) {
 
-                if ($searchKey !== null && $searchKey !== 'search' || $hospitalId !== null && $hospitalId !== 'null') {
+                if ($searchKey !== null && $searchKey !== 'search' || $hospitalId !== null && $hospitalId !== 'null' || $implant_type !== null && $implant_type !== 'null' ) {
                     $query .= ' WHERE ';
                 }
 
                 if ($searchKey !== null && $searchKey !== 'search') {
-                    $query .= 'p.firstname_pat
+                    $query .= 'p.patientID
                         LIKE "%' . $searchKey . '%" OR h.name_hosp LIKE "%' . $searchKey . '%"';
                 }
 
 
                 if ($hospitalId !== null && $hospitalId !== 'null') {
 
-                    if ($searchKey !== null && $searchKey !== 'search') {
 
-                        $query .= ' AND ';
-                    }
-                    $query .= 'i.hospitalID = ' . $hospitalId;
+                    $query .= ' i.hospitalID = ' . $hospitalId;
                 }
 
                 if($implant_type !== null && $implant_type !== 'null' ){
                     if($hospitalId !== null)
-                    {
 
-                        $query .= ' AND ';
-                    }
 
                     $query .=' i.implant_type = '.$implant_type;
                 }
