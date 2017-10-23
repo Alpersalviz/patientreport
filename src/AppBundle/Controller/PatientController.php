@@ -111,8 +111,6 @@ class PatientController extends BaseController
 
         $patientObj = (new Patient())->MapFrom($patient);
 
-//        var_dump($deviceOfPat->OutflowGraft);exit;
-
         $add = $this->_patientRepo->UpdateImplant($deviceOfPat,$patientObj);
 
 

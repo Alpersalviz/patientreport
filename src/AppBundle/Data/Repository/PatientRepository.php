@@ -316,6 +316,7 @@ class PatientRepository extends BaseRepository
                       ex = :ex,
                       surgicalImplant = :surgicalImplant,
                       implantType = :implantType,
+                      implant_type = :implant_type,
                       surgeon = :surgeon,
                       intermacsLevel = :intermacsLevel,
                       etiology = :etiology,
@@ -391,6 +392,7 @@ class PatientRepository extends BaseRepository
                 ':tx'                   => (int)$device->Tx,
                 ':surgicalImplant'      => $device->SurgicalImplant,
                 ':implantType'          => $device->ImplantType,
+                ':implant_type'          => $device->Implant_Type,
                 ':surgeon'              => $device->Surgeon,
                 ':intermacsLevel'       => $device->IntermacsLevel,
                 ':etiology'             => $device->Etiology,
@@ -465,9 +467,8 @@ class PatientRepository extends BaseRepository
         return false;
     }
 
-    public function GetImplant($offset = 0, $limit = 5, $searchKey = null, $hospitalId = null,$firstmonth,$secondmonth,$year,$implant_type = null)
+    public function GetImplant($offset = 0, $limit = 10, $searchKey = null, $hospitalId = null,$firstmonth,$secondmonth,$year,$implant_type = null)
     {
-
 
         try {
             $countQuery='SELECT COUNT(*) as row_count 
@@ -544,8 +545,6 @@ class PatientRepository extends BaseRepository
                 }
 
                 if($implant_type !== null && $implant_type !== 'null' ){
-                    if($hospitalId !== null)
-
 
                     $query .=' i.implant_type = '.$implant_type;
                 }
@@ -588,6 +587,7 @@ class PatientRepository extends BaseRepository
                 $implant[] = (new Implant())->MapFrom($result);
             }
             $list = new PagedList($implant,(int)$countResult['row_count'],$limit,$searchKey,$hospitalId,$firstmonth,$secondmonth,$year,$implant_type);
+
 
             return $list;
 

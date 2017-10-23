@@ -75,11 +75,11 @@
                             <div class="col-sm-2">
                              <div class="dataTables_length" id="dataTables-example_length">
                                         <select  name="implant_type" id="implant_type"  class="form-control">
-                                            <option value="null">Implant Type</option>
+                                            <option value="null" {% if implant.ImplantType == "0" %} selected{% endif %}>Implant Type</option>
 
-                                            <option value="0" {% if implant.ImplantType == "0" %} selected{% endif %}>Bivad</option>
-                                            <option value="1" {% if implant.ImplantType == "1" %} selected{% endif %}>Lvad</option>
-                                            <option value="2" {% if implant.ImplantType == "2" %} selected{% endif %}>Rvad</option>
+                                            <option value="1" {% if implant.ImplantType == "1" %} selected{% endif %}>Bivad</option>
+                                            <option value="2" {% if implant.ImplantType == "2" %} selected{% endif %}>Lvad</option>
+                                            <option value="3" {% if implant.ImplantType == "3" %} selected{% endif %}>Rvad</option>
 
                                         </select>
                              </div>
